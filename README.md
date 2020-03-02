@@ -1,4 +1,7 @@
-# Boilermaker Michael Kenny
+# Boilermaker:
+* Akil Grant
+* Michael Kenny
+* Rich McAteer
 
 _Good things come in pairs_
 

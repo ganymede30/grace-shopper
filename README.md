@@ -1,4 +1,4 @@
-# Boilermaker
+# Boilermaker SAMPLE ERROR
 
 _Good things come in pairs_
 

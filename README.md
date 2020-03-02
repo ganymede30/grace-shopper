@@ -1,4 +1,4 @@
-# Boilermaker SAMPLE ERROR
+# Boilermaker: Rich McAteer
 
 _Good things come in pairs_
 

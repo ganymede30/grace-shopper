@@ -1,4 +1,4 @@
-# Boilermaker
+# Boilermaker: Rich McAteer
 
 _Good things come in pairs_
 

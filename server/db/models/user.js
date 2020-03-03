@@ -4,16 +4,16 @@ const db = require('../db')
 
 const User = db.define('user', {
   name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    },
+    type: Sequelize.STRING
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // },
   },
   email: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false
+    type: Sequelize.STRING
+    // unique: true,
+    // allowNull: false
   },
   password: {
     type: Sequelize.STRING,
@@ -32,16 +32,16 @@ const User = db.define('user', {
     }
   },
   shippingAddress: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    },
+    type: Sequelize.STRING
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // },
   },
   admin: {
-    type: Sequelize.ENUM('true', 'false'),
-    allowNull: false
-  },
+    type: Sequelize.ENUM('true', 'false')
+    // allowNull: false
+  }
   // googleId: {
   //   type: Sequelize.STRING
   // }

@@ -2,8 +2,11 @@
 
 const db = require('../server/db')
 const {User, Shoe} = require('../server/db/models')
+const shoes = require('../shoes')
 
 async function seed() {
+  console.log(shoes.length)
+
   await db.sync({force: true})
   console.log('db synced!')
 
@@ -12,8 +15,15 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
+  const s = await Promise.all(
+    shoes.map(shoe => {
+      return Shoe.create(shoe)
+    })
+  )
+
+  console.log(`Seeded ${users.length} users`)
+  console.log(`Seeded ${s.length} shoes`)
+  console.log(`Seeded successfully!`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.

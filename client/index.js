@@ -12,6 +12,7 @@ import './socket'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
+      <h1>TRAVIS IS WORKING</h1>
       <App />
     </Router>
   </Provider>,

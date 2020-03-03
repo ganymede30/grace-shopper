@@ -4,7 +4,7 @@ const db = require('../server/db')
 const {User, Shoe, Order} = require('../server/db/models')
 const shoes = require('../seedData/shoes')
 const users = require('../seedData/users')
-const orders = require('../seedData/orders')
+const orders = require('../seedData/order')
 
 async function seed() {
   await db.sync({force: true})

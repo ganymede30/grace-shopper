@@ -39,7 +39,8 @@ const User = db.define('user', {
     // },
   },
   admin: {
-    type: Sequelize.ENUM('true', 'false')
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
     // allowNull: false
   }
   // googleId: {

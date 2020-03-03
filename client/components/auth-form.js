@@ -6,7 +6,6 @@ import {auth} from '../store'
 /**
  * COMPONENT
  */
-const ciTest = 'ci'
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 

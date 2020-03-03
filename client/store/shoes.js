@@ -40,7 +40,7 @@ export const getShoesThunk = () => async dispatch => {
   }
 }
 
-const shoesReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case SHOE:
       return {...state, shoe: action.shoe}

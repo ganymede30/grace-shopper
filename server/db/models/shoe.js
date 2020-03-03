@@ -7,31 +7,31 @@ const Shoe = db.define('shoe', {
     allowNull: false,
     validate: {
       notEmpty: true
-    },
+    }
   },
   price: {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0
-    },
+    }
   },
   size: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER
     // allowNull: false,
     // validate: {
     //   min: 0
     // },
   },
   gender: {
-    type: Sequelize.ENUM('male', 'female', 'unisex'),
+    type: Sequelize.ENUM('male', 'female', 'unisex')
     // allowNull: false,
     // validate: {
     //   notEmpty: true
     // },
   },
   color: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
     // allowNull: false,
     // validate: {
     //   notEmpty
@@ -41,24 +41,23 @@ const Shoe = db.define('shoe', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty
-    },
+      notEmpty: true
+    }
   },
   imageUrl: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty
-    },
+      notEmpty: true
+    }
   },
   stock: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER
     //allowNull: false,
     // validate: {
     //   min: 0
     // },
-  },
+  }
 })
 
 module.exports = Shoe
-

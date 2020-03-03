@@ -3,18 +3,18 @@ const db = require('../db')
 
 const Shoe = db.define('shoe', {
   model: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // },
   },
   price: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    validate: {
-      min: 0
-    }
+    type: Sequelize.INTEGER
+    // allowNull: false,
+    // validate: {
+    //   min: 0
+    // },
   },
   size: {
     type: Sequelize.INTEGER
@@ -45,11 +45,11 @@ const Shoe = db.define('shoe', {
     }
   },
   imageUrl: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // },
   },
   stock: {
     type: Sequelize.INTEGER

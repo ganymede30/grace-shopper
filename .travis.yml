@@ -15,14 +15,16 @@ install:
 before_script:
   - psql -c 'create database "cram-inc-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
-  - npm test             # test the code
+  - npm test # test the code
   - npm run build-client # make the bundle
-
-before_deploy:
-  - rm -rf node_modules # omit from the tarball, since we skip cleanup
-deploy:
-  skip_cleanup: true # prevents travis from deleting the build
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
+deploy: # see README for details on these keys
+  # prevents travis from deleting the build
+  skip_cleanup: true
   provider: heroku
-  app: https://cram-inc.herokuapp.com/ # see README
+  # app should be your heroku app name; see README
+  app: cram-inc
+  # the secure key indicates an encrypted value; see README
   api_key:
-    secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+    secure: KLTFnizrKEKbiiyypmC8gbfHEc9t7LzhhefDVk9W7zll9MpPx6IiohK9uCy9CX296MjBbfr0Gsyaay/gMfWdXmRozfjtQcLui9B5tjc091pr+Qug/bozMVO/edIWLGKTj/Bz8A2arSGtJpeYcoJwowz7OUR9ngsUpA7MDWozU2Tq3K3zbTdZQDYm4wnQp0tBzNn9d3IHis4KWT5fqBzFcTxY+mh+jxr4F9W1223nTIgg5F9+R2eelIQUBL0kdmh2kjuDz4Ku88VgUxErWAM5151DsFcQkl9dy/QpbMCMoHX9qvw8EaWRjl8V7ZjSzI86X0YQdVcA8zo1fRu0o00MtBiMnIQgja4woVluy3tQ6aUbGHcD34TvmPTv/iinyQ2jWd9a1EyZRjfux/JX/fUpltxvMqIMFmOcIT6KlkAJ8o3yLvG3hI+A/xOJCmoDvod8xf+cCWVjMU6fhAwCVPGniJMCvPwwQk/grx1q7S66rk7PE/llAs5sSGqbX2VfwRlV9+atMyjvtVCsUhGkaCqa95grPjs7Ltoe5SioX2KV4Vi7RBAsmMX3Dn99Pei+a7yHaQAZYfsB7zePxIuQ+2WG5HFxMkyb3lqWvltNWP3YD3i1cGE1RTcvpYE8naBVKp4+AIztbS9N0XR0Cg6et76dFXmhRBQhx9tG5xONrZ7+4Jo=

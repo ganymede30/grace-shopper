@@ -6,21 +6,38 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>BOILERMAKER</h1>
     <nav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          <Link to="/">Home</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
+          <Link to="/cart">
+            <img src="shoe.png" style={{width: '25px'}} />
+          </Link>
         </div>
       ) : (
-        <div>
+        <div style={{display: 'flex', alignItems: 'center'}}>
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          <Link to="/">
+            <h1>SHOELALA</h1>
+          </Link>
+          <form style={{paddingLeft: '1%'}}>
+            <input
+              type="text"
+              name="searchQuery"
+              placeholder="Pick Your Kicks"
+              style={{padding: '3%'}}
+            />
+          </form>
+          <div>
+            <Link to="/login">Login/Sign-Up</Link>
+            <Link to="/cart">
+              <img src="shoe.png" style={{width: '25px'}} />
+            </Link>
+          </div>
         </div>
       )}
       <Link to="/cart">Cart</Link>

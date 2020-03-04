@@ -15,13 +15,14 @@ export const removeFromCart = id => ({
 
 export const addToCartDispatcher = item => dispatch => {
   // the first time called, items will be empty.
+  console.log(item, 'THE ITEMMMMMMM')
   dispatch(addToCart(item))
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      return {...state, items: [...state.items, ...action.item]}
+      return {...state, items: [...state.items, action.item]}
     default:
       return state
   }

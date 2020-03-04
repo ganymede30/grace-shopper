@@ -9,7 +9,7 @@ export class SingleShoe extends Component {
 
   render() {
     const {shoe} = this.props
-    console.log(shoe)
+    // console.log(shoe)
     return <div>{console.log(shoe)}</div>
   }
 }

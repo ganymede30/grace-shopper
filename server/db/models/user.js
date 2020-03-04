@@ -42,10 +42,10 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
     // allowNull: false
+  },
+  googleId: {
+    type: Sequelize.STRING
   }
-  // googleId: {
-  //   type: Sequelize.STRING
-  // }
 })
 
 module.exports = User

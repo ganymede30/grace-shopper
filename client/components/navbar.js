@@ -10,7 +10,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          <Link to="/">Home</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -21,7 +21,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div style={{display: 'flex', alignItems: 'center'}}>
           {/* The navbar will show these links before you log in */}
-          <h1>SHOELALA</h1>
+          <Link to="/">
+            <h1>SHOELALA</h1>
+          </Link>
           <form style={{paddingLeft: '1%'}}>
             <input
               type="text"

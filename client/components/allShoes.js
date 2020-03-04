@@ -2,20 +2,20 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
-import {Shoe} from './Shoe'
+import {Shoe} from './shoe'
 
 class Shoes extends Component {
   constructor(props) {
     super(props)
   }
 
-  componentDidMount() {
-    this.props.gotShoes()
+  async componentDidMount() {
+    await this.props.gotShoes()
   }
   render() {
     if (this.props.shoes.shoes.length) {
       return (
-        <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        <div>
           {this.props.shoes.shoes.map(shoe => {
             return (
               <Link to={`/shoes/${shoe.id}`} key={shoe.id}>

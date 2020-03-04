@@ -11,7 +11,7 @@ const Order = db.define('order', {
   shipmentStatus: {
     type: Sequelize.ENUM('Not Shipped', 'En Route', 'Arrived')
   },
-  orderStatus: {
+  isCart: {
     type: Sequelize.BOOLEAN
   },
   confirmationNumber: {

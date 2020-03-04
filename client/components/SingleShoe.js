@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getShoeThunk} from '../store/shoes'
-import {Shoe} from './shoe'
+import {Shoe} from './Shoe'
 
 export class SingleShoe extends Component {
   constructor(props) {

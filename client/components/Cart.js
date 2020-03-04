@@ -5,10 +5,10 @@ import {connect} from 'react-redux'
 export class Cart extends Component {
   render() {
     const {items} = this.props
-    // console.log(addToCart, 'THIS IS THE CART')
+    console.log(items, 'THIS IS THE CART')
     return (
       <div>
-        {items.length ? (
+        {items.length === 0 ? (
           'Cart is empty'
         ) : (
           <div>You have {items.length} items in the cart.</div>

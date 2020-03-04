@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
+import {Shoe} from './Shoe'
 
 class Shoes extends Component {
   constructor(props) {
@@ -18,15 +19,7 @@ class Shoes extends Component {
           {this.props.shoes.shoes.map(shoe => {
             return (
               <Link to={`/shoes/${shoe.id}`} key={shoe.id}>
-                <div>
-                  <img src={shoe.imageUrl} width="75px" />
-                  <p style={{margin: 0, fontSize: '10px', color: 'black'}}>
-                    Name
-                  </p>
-                  <p style={{margin: 0, fontSize: '10px', color: 'black'}}>
-                    ${shoe.price}
-                  </p>
-                </div>
+                <Shoe shoe={shoe} />
               </Link>
             )
           })}

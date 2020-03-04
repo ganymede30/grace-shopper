@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 
 export default class Hero extends Component {
   render() {
@@ -6,7 +7,9 @@ export default class Hero extends Component {
       <div>
         <div className="imgContainer">
           <img src="shoe.png" />
-          <p>SHOP</p>
+          <Link to="/shoes">
+            <p>SHOP</p>
+          </Link>
         </div>
         <div className="featuredShoes">
           <p>FEATURED</p>

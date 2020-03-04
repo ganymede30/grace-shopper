@@ -30,7 +30,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               name="searchQuery"
               placeholder="Pick Your Kicks"
               style={{padding: '3%'}}
-            ></input>
+            />
           </form>
           <div>
             <Link to="/login">Login/Sign-Up</Link>
@@ -40,6 +40,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </div>
         </div>
       )}
+      <Link to="/cart">Cart</Link>
     </nav>
     <hr />
   </div>

@@ -26,7 +26,7 @@ export const getAllItems = ({items}) => ({
 
 export const addToCartThunk = item => async dispatch => {
   try {
-    await axios.post('/api/cart', item)
+    await axios.post('/api/cart', item) //post for the session;
     dispatch(addToCart(item))
   } catch (error) {
     console.error(error)
@@ -36,7 +36,6 @@ export const addToCartThunk = item => async dispatch => {
 export const getAllItemsThunk = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/cart')
-    // console.log(data, 'THE DATAAAA')
     dispatch(getAllItems(data))
   } catch (error) {
     console.error(error)

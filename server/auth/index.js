@@ -34,7 +34,7 @@ router.post('/signup', async (req, res, next) => {
 
 router.post('/logout', (req, res) => {
   req.logout()
-  // req.session.destroy()
+  req.session.destroy()
   // find the user in the user table and add the cart to its table.
   res.redirect('/')
 })

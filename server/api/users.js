@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {User, Order} = require('../db/models')
 module.exports = router
 
+// GET all users
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -16,9 +17,10 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// GET single user
 router.get('/:id', async (req, res, next) => {
   try {
-    const id = req.params.Id
+    const id = req.params.id
     const user = await User.findByPk(id, {
       attributes: ['id', 'email']
     })
@@ -28,6 +30,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// GET all orders for one user
 router.get('/:id/orders', async (req, res, next) => {
   try {
     const userId = req.params.id
@@ -38,3 +41,24 @@ router.get('/:id/orders', async (req, res, next) => {
     next(error)
   }
 })
+
+// GET one order for one user
+router.get('/:id/orders/:orderId', async (req, res, next) => {
+  try {
+    const orderId = req.params.id
+    const findOne = await Order.findByPk(orderId)
+    res.json(findOne)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// router.post('/', async (req, res, next) => {
+//   try {
+//     // create a new order and assign its userId;
+//     const newOrder = await Order.create(req.body);
+
+//   } catch (error) {
+//     next(error)
+//   }
+// })

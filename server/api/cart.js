@@ -2,6 +2,7 @@ const router = require('express').Router()
 module.exports = router
 
 router.get('/', (req, res, next) => {
+  // find all
   try {
     res.json(req.session.cart)
   } catch (error) {

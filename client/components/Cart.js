@@ -28,18 +28,11 @@ const columns = [
     minWidth: 40,
     align: 'right',
     format: value => value.toLocaleString()
-  },
-  {
-    id: 'total',
-    label: 'Total',
-    minWidth: 40,
-    align: 'right',
-    format: value => value.toFixed(2)
   }
 ]
 
-function createData(product, info, quantity = 0, price, total = 0) {
-  return {product, info, quantity, price, total}
+function createData(product, info, quantity, price) {
+  return {product, info, quantity, price}
 }
 
 const useStyles = makeStyles({
@@ -56,14 +49,9 @@ const Cart = ({items, fetchCart}) => {
     fetchCart()
   }, [])
 
+  console.log(items, 'Items')
   const rows = items.map(item =>
-    createData(
-      `<img src=${item.imageUrl}></img>`,
-      item.model,
-      item.qty,
-      item.price,
-      item.total
-    )
+    createData(item.imageUrl, item.model, item.qty, item.price, item.total)
   )
 
   const classes = useStyles()

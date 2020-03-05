@@ -3,7 +3,8 @@ const shoes = [
     brand: 'Air Jordan',
     model: 'Air Jordan 1 Retro High OG "Red Green"',
     price: 230,
-    imageUrl: 'https://cdn.flightclub.com/750/TEMPLATE/135278/1.jpg?w=360'
+    imageUrl: 'https://cdn.flightclub.com/750/TEMPLATE/135278/1.jpg?w=360',
+    stock: 10
   },
   {
     brand: 'Nike',

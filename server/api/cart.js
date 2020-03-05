@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', (req, res, next) => {
   try {
     req.session.cart.items = [...req.session.cart.items, req.body]
     console.log(req.session, 'SESH')

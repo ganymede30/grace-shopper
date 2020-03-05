@@ -102,6 +102,7 @@
     "redux-mock-store": "^1.5.3",
     "simple-git": "^1.121.0",
     "supertest": "^4.0.2",
+    "supertest-session": "^4.0.0",
     "webpack": "^4.16.4",
     "webpack-cli": "^3.1.0",
     "yaml": "^1.6.0"

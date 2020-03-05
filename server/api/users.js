@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
-const {isAdmin, isAdminOrUser} = require('../adminMiddleware')
+const {isAdmin} = require('../adminMiddleware')
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
@@ -16,7 +16,7 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
-router.get('/:userId', isAdminOrUser, async (req, res, next) => {
+router.get('/:userId', isAdmin, async (req, res, next) => {
   try {
     const userId = req.params.userId
     const user = await User.findByPk(userId, {

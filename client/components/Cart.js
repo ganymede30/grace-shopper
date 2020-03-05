@@ -1,6 +1,6 @@
-import React, {Component, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import CartItem from './CartItem'
+// import CartItem from './CartItem'
 import {getAllItemsThunk} from '../store/cart'
 import {makeStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -13,26 +13,26 @@ import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 
 const columns = [
-  {id: 'product', label: 'Product', minWidth: 140},
+  {id: 'product', label: 'Product', minWidth: 100},
   {id: 'info', label: 'Product Info', minWidth: 100},
   {
     id: 'quantity',
     label: 'Qty',
-    minWidth: 140,
+    minWidth: 40,
     align: 'right',
     format: value => value.toLocaleString()
   },
   {
     id: 'price',
     label: 'Price',
-    minWidth: 140,
+    minWidth: 40,
     align: 'right',
     format: value => value.toLocaleString()
   },
   {
     id: 'total',
     label: 'Total',
-    minWidth: 140,
+    minWidth: 40,
     align: 'right',
     format: value => value.toFixed(2)
   }
@@ -57,7 +57,13 @@ const Cart = ({items, fetchCart}) => {
   }, [])
 
   const rows = items.map(item =>
-    createData(item.imageUrl, item.model, item.qty, item.price, item.total)
+    createData(
+      `<img src=${item.imageUrl}></img>`,
+      item.model,
+      item.qty,
+      item.price,
+      item.total
+    )
   )
 
   const classes = useStyles()
@@ -93,7 +99,6 @@ const Cart = ({items, fetchCart}) => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(row => {
-                console.log(row, 'ROW')
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                     {columns.map(column => {

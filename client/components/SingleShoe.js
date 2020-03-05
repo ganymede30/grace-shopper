@@ -1,19 +1,16 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getShoeThunk} from '../store/shoes'
-import {Shoe} from './Shoe'
 
 export class SingleShoe extends Component {
-  constructor(props) {
-    super(props)
+  async componentDidMount() {
+    await this.props.fetchShoe(this.props.match.params.id)
   }
 
-  async componentDidMount() {
-    const id = this.props.match.path.split('/')[2]
-    await this.props.fetchShoe(id)
-  }
   render() {
-    return <Shoe shoe={this.props.shoe} />
+    const {shoe} = this.props
+    // console.log(shoe)
+    return <div>{console.log(shoe)}</div>
   }
 }
 

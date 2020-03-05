@@ -15,26 +15,27 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             Logout
           </a>
           <Link to="/cart">
-            <img src="shoe.png" />
+            <img src="shoe.png" style={{width: '25px'}} />
           </Link>
         </div>
       ) : (
-        <div>
+        <div style={{display: 'flex', alignItems: 'center'}}>
           {/* The navbar will show these links before you log in */}
           <Link to="/">
             <h1>SHOELALA</h1>
           </Link>
-          <form>
+          <form style={{paddingLeft: '1%'}}>
             <input
               type="text"
               name="searchQuery"
               placeholder="Pick Your Kicks"
-            ></input>
+              style={{padding: '3%'}}
+            />
           </form>
           <div>
             <Link to="/login">Login/Sign-Up</Link>
             <Link to="/cart">
-              <img src="shoe.png" />
+              <img src="shoe.png" style={{width: '25px'}} />
             </Link>
           </div>
         </div>

@@ -2,16 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
+
 import Cart from './components/Cart'
-import {
-  LoginSignUp,
-  UserHome,
-  Hero,
-  allShoes,
-  SingleShoe,
-  Checkout
-} from './components'
-import {getShoesThunk} from './store/shoes'
+import {LoginSignUp, UserHome, Hero, allShoes, Checkout} from './components'
 import {me} from './store'
 
 /**
@@ -20,11 +13,11 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    this.props.gotShoes()
   }
 
   render() {
     const {isLoggedIn} = this.props
+
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -32,15 +25,6 @@ class Routes extends Component {
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/shoes" component={allShoes} />
         <Route path="/login" component={LoginSignUp} />
-        {this.props.shoes.shoes.map(shoe => {
-          return (
-            <Route
-              path={`/shoes/${shoe.id}`}
-              component={SingleShoe}
-              key={shoe.id}
-            />
-          )
-        })}
         <Route exact path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
@@ -62,14 +46,12 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    shoes: state.shoes,
     isLoggedIn: !!state.user.id
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    gotShoes: () => dispatch(getShoesThunk()),
     loadInitialData() {
       dispatch(me())
     }

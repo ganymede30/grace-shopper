@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import {Carousel} from './carousel'
 
 export default class Hero extends Component {
   render() {
     return (
       <div>
         <div className="imgContainer">
-          <img src="shoe.png" />
+          <Carousel />
           <Link to="/shoes">
             <p>SHOP</p>
           </Link>

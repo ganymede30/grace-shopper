@@ -13,3 +13,5 @@ module.exports = {
   Shoe,
   Order
 }
+
+//custom join table for OrderShoes with quantity and price

@@ -2,7 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {LoginSignUp, UserHome, Hero, allShoes, SingleShoe} from './components'
+import Cart from './components/Cart'
+import {
+  LoginSignUp,
+  UserHome,
+  Hero,
+  allShoes,
+  SingleShoe,
+  Checkout
+} from './components'
 import {getShoesThunk} from './store/shoes'
 import {me} from './store'
 
@@ -21,6 +29,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={Hero} />
+        <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/shoes" component={allShoes} />
         <Route path="/login" component={LoginSignUp} />
         {this.props.shoes.shoes.map(shoe => {
@@ -32,6 +41,7 @@ class Routes extends Component {
             />
           )
         })}
+        <Route exact path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

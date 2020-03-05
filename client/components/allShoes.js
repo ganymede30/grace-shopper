@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
+import {addToCartDispatcher} from '../store/cart'
 import {Shoe} from './Shoe'
 
 class Shoes extends Component {
   constructor(props) {
     super(props)
   }
-
-  async componentDidMount() {
-    await this.props.gotShoes()
+  componentDidMount() {
+    this.props.gotShoes()
   }
   render() {
     if (this.props.shoes.shoes.length) {
@@ -18,9 +18,17 @@ class Shoes extends Component {
         <div>
           {this.props.shoes.shoes.map(shoe => {
             return (
-              <Link to={`/shoes/${shoe.id}`} key={shoe.id}>
-                <Shoe shoe={shoe} />
-              </Link>
+              <div key={shoe.id}>
+                <Link to={`/shoes/${shoe.id}`}>
+                  <Shoe shoe={shoe} />
+                </Link>
+                <button
+                  type="submit"
+                  onClick={() => this.props.addToCart(shoe)}
+                >
+                  Add to cart
+                </button>
+              </div>
             )
           })}
         </div>
@@ -37,10 +45,9 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    gotShoes: () => dispatch(getShoesThunk())
-  }
-}
+const mapDispatch = dispatch => ({
+  gotShoes: () => dispatch(getShoesThunk()),
+  addToCart: item => dispatch(addToCartDispatcher(item))
+})
 
 export const allShoes = connect(mapState, mapDispatch)(Shoes)

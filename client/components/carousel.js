@@ -1,9 +1,15 @@
 import Glide from '@glidejs/glide'
 import React from 'react'
 
-export const Carousel = () => {
+export const Carousel = props => {
+  //   const [slider] = useState(new Glide(`.${element}`, options))
+  // useEffect(() => {
+  //   slider.mount()
+  // }, [])
+
+  // const slider = new Glide(props.element).mount()
   return (
-    <div>
+    <div className="container">
       <div className="glide">
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
@@ -29,6 +35,9 @@ export const Carousel = () => {
           </button>
         </div>
       </div>
+      {/* <script>
+      {new Glide('.glide').mount()}
+    </script> */}
     </div>
   )
 }

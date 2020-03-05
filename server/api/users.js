@@ -1,8 +1,8 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
-module.exports = router
+const {isAdmin, isAdminOrUser} = require('../adminMiddleware')
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', isAdminOrUser, async (req, res, next) => {
   try {
     const userId = req.params.userId
     const user = await User.findByPk(userId, {
@@ -27,3 +27,5 @@ router.get('/:userId', async (req, res, next) => {
     next(err)
   }
 })
+
+module.exports = router

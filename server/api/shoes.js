@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {Shoe} = require('../db/models')
-module.exports = router
+const {isAdmin} = require('../adminMiddleware')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -14,9 +14,20 @@ router.get('/', async (req, res, next) => {
 router.get('/:shoeId', async (req, res, next) => {
   try {
     const shoeId = req.params.shoeId
-    const aShoe = await Shoe.findByPk(shoeId)
-    res.json(aShoe)
+    const shoe = await Shoe.findByPk(shoeId)
+    res.json(shoe)
   } catch (error) {
     next(error)
   }
 })
+
+router.post('/', isAdmin, async (req, res, next) => {
+  try {
+    const shoe = await Shoe.create(req.body)
+    res.status(201).send(shoe)
+  } catch (error) {
+    next(error)
+  }
+})
+
+module.exports = router

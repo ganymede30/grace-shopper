@@ -1,9 +1,11 @@
 const router = require('express').Router()
 const {User, Order} = require('../db/models')
+const {isAdmin} = require('../adminMiddleware')
 module.exports = router
 
 // GET all users
-router.get('/', async (req, res, next) => {
+
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -18,9 +20,9 @@ router.get('/', async (req, res, next) => {
 })
 
 // GET single user
-router.get('/:id', async (req, res, next) => {
+router.get('/:userId', isAdmin, async (req, res, next) => {
   try {
-    const id = req.params.id
+    const id = req.params.userId
     const user = await User.findByPk(id, {
       attributes: ['id', 'email']
     })
@@ -52,13 +54,3 @@ router.get('/:id/orders/:orderId', async (req, res, next) => {
     next(error)
   }
 })
-
-// router.post('/', async (req, res, next) => {
-//   try {
-//     // create a new order and assign its userId;
-//     const newOrder = await Order.create(req.body);
-
-//   } catch (error) {
-//     next(error)
-//   }
-// })

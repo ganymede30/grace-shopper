@@ -26,7 +26,9 @@ export const getAllItems = ({items}) => ({
 
 export const addToCartThunk = item => async dispatch => {
   try {
+    console.log('The Item: ', item)
     await axios.post('/api/cart', item) //post for the session;
+    //await axios.post('/api/orders', item)
     dispatch(addToCart(item))
   } catch (error) {
     console.error(error)

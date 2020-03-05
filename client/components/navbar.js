@@ -11,13 +11,32 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-          <Link to="/cart">
-            <img src="shoe.png" />
-          </Link>
+          <div id="leftNav">
+            <Link to="/">SHOELALA</Link>
+            <form>
+              <input
+                type="text"
+                name="searchQuery"
+                placeholder="Pick Your Kicks"
+              ></input>
+            </form>
+          </div>
+          <ButtonGroup
+            id="rightNav"
+            color="primary"
+            aria-label="outlined primary button group"
+          >
+            <Button id="login" variant="text">
+              <a href="#" onClick={handleClick}>
+                Logout
+              </a>
+            </Button>
+            <Button id="cart" variant="text" className="navButton">
+              <Link to="/cart" style={{margin: 0}}>
+                <img src="shoe.png" id="cartImg" />
+              </Link>
+            </Button>
+          </ButtonGroup>
         </div>
       ) : (
         <div id="navbar">

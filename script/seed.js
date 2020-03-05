@@ -27,6 +27,13 @@ async function seed() {
     })
   )
 
+  const firstOrder = createdOrders[0]
+  const secondOrder = createdOrders[1]
+  const thirdOrder = createdOrders[2]
+
+  await firstOrder.addShoes(createdShoes[0], createdShoes[1], createdShoes[2])
+  //await secondOrder.addShoes(createdShoes)
+
   console.log(`Seeded ${createdShoes.length} shoes`)
   console.log(`Seeded ${createdUsers.length} users`)
   console.log(`Seeded ${createdOrders.length} orders`)

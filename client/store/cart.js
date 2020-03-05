@@ -1,7 +1,12 @@
+import axios from 'axios'
+
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 
-const initialState = {items: []}
+const initialState = {
+  items: [],
+  total: 0
+}
 
 export const addToCart = item => ({
   type: ADD_TO_CART,
@@ -13,10 +18,13 @@ export const removeFromCart = id => ({
   id
 })
 
-export const addToCartDispatcher = item => dispatch => {
-  // the first time called, items will be empty.
-  console.log(item, 'THE ITEMMMMMMM')
-  dispatch(addToCart(item))
+export const addToCartThunk = item => async dispatch => {
+  try {
+    await axios.post('/api/cart', item)
+    dispatch(addToCart(item))
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export default (state = initialState, action) => {

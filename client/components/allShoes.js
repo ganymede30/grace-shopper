@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
-import {addToCartDispatcher} from '../store/cart'
+import {addToCartThunk} from '../store/cart'
 
 class Shoes extends Component {
   componentDidMount() {
@@ -51,7 +51,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   gotShoes: () => dispatch(getShoesThunk()),
-  addToCart: item => dispatch(addToCartDispatcher(item))
+  addToCart: item => dispatch(addToCartThunk(item))
 })
 
 export const allShoes = connect(mapState, mapDispatch)(Shoes)

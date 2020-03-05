@@ -1,17 +1,35 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import { addToCartDispatcher } from '../store/cart'
+import CartItem from './CartItem'
+import axios from 'axios'
 
 export class Cart extends Component {
+  async componentDidMount() {
+    const {data} = await axios.get('/api/cart')
+    console.log(data, 'CART IN FRONT END')
+  }
+
   render() {
     const {items} = this.props
-    console.log(items, 'THIS IS THE CART')
     return (
       <div>
         {items.length === 0 ? (
           'Cart is empty'
         ) : (
-          <div>You have {items.length} items in the cart.</div>
+          <div>
+            <div>You have {items.length} items in the cart.</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Product Information</th>
+                  <th>Qty</th>
+                  <th>Unit Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
         )}
       </div>
     )

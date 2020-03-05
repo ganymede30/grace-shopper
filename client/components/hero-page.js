@@ -7,7 +7,7 @@ export default class Hero extends Component {
     return (
       <div>
         <div className="imgContainer">
-          <Carousel />
+          <Carousel element="glide" />
           <Link to="/shoes">
             <p>SHOP</p>
           </Link>

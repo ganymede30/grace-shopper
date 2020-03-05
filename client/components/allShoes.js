@@ -3,13 +3,10 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
 
-import {addToCartDispatcher} from '../store/cart'
+import {addToCartThunk} from '../store/cart'
 import {Shoe} from './Shoe'
 
 class Shoes extends Component {
-  constructor(props) {
-    super(props)
-  }
   componentDidMount() {
     this.props.gotShoes()
   }

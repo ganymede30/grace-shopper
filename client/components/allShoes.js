@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
 import {addToCartDispatcher} from '../store/cart'
 import {Shoe} from './Shoe'
-import {Link as MaterialUiLink} from '@material-ui/core'
 
 class Shoes extends Component {
   constructor(props) {

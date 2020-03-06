@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     width: '60%'
   },
   container: {
-    maxHeight: 440
+    maxHeight: 700
   }
 })
 
@@ -67,7 +67,7 @@ const Cart = ({items, fetchCart}) => {
   }
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} style={{width: '100%'}}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

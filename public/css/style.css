@@ -13,7 +13,7 @@ label {
   display: block;
 }
 
-/*nav css styles */
+/*navbar styles */
 nav a {
   display: inline-block;
 }
@@ -32,6 +32,10 @@ nav a {
   display: flex;
   flex-basis: 40%;
   padding-left: 1em;
+}
+
+#logo {
+  width: 100px;
 }
 
 #rightNav {
@@ -66,4 +70,32 @@ nav a {
 
 form div {
   display: inline-block;
+}
+
+/*footer styles */
+#footer {
+  background-color: #c1c7d8;
+  display: flex;
+  padding-top: 1em;
+  padding-bottom: 2em;
+  flex-direction: row;
+}
+
+#firstChild {
+  padding-left: 1em;
+  padding-right: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+#secondChild {
+  padding-left: 1em;
+  padding-right: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+#thirdChild {
+  padding-left: 1em;
+  padding-right: 1em;
 }

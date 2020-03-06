@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
 
+import {addToOrderThunk} from '../store/order'
 import {addToCartThunk} from '../store/cart'
 import {Shoe} from './Shoe'
 
@@ -22,7 +23,9 @@ class Shoes extends Component {
                 </Link>
                 <button
                   type="submit"
-                  onClick={() => this.props.addToCart(shoe)}
+                  //onClick={() => console.log("The Props:", this.props)}
+                  onClick={() => this.props.addToOrder(shoe)}
+                  //onClick={() => this.props.addToCart(shoe)}
                 >
                   Add to cart
                 </button>
@@ -45,7 +48,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   gotShoes: () => dispatch(getShoesThunk()),
-  addToCart: item => dispatch(addToCartThunk(item))
+  addToCart: item => dispatch(addToCartThunk(item)),
+  addToOrder: item => dispatch(addToOrderThunk(item))
 })
 
 export const allShoes = connect(mapState, mapDispatch)(Shoes)

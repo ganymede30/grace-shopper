@@ -1,36 +1,35 @@
 const router = require('express').Router()
-const {User, Order} = require('../db/models')
-const {isAdmin} = require('../adminMiddleware')
+const {User, Shoe, Order} = require('../db/models')
+//const Shoe = require('../db/models/shoe')
 module.exports = router
 
-// GET all users
+// router.get('/', (req, res, next) => {
+//   // find all
+//   try {
+//     res.json(req.session.cart)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
-router.get('/', isAdmin, async (req, res, next) => {
+//This is for a logged in user
+router.post('/', async (req, res, next) => {
   try {
-    const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ['id', 'email']
+    const [order] = await Order.findOrCreate({
+      where: {userId: req.user.id, isCart: true}
     })
-    res.json(users)
-  } catch (err) {
-    next(err)
+
+    const shoe = await Shoe.findByPk(req.body.id)
+    console.log('The OrderId:', order.id)
+    console.log('The ShoeId:', shoe.id)
+    order.addShoe(shoe)
+
+    res.json(order)
+  } catch (error) {
+    next(error)
   }
 })
-
-// GET single user
-router.get('/:userId', isAdmin, async (req, res, next) => {
-  try {
-    const id = req.params.userId
-    const user = await User.findByPk(id, {
-      attributes: ['id', 'email']
-    })
-    res.json(user)
-  } catch (err) {
-    next(err)
-  }
-})
+// get request to fetch on the first time
 
 // GET all orders for one user
 router.get('/:id/orders', async (req, res, next) => {
@@ -49,7 +48,7 @@ router.get('/:id/orders/:orderId', async (req, res, next) => {
   try {
     const orderId = req.params.id
     const findOne = await Order.findByPk(orderId)
-    console.log('User:', req.user)
+    console.log('User Id:', req.user.id)
     res.json(findOne)
   } catch (error) {
     next(error)

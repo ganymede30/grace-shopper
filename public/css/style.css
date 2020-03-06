@@ -99,3 +99,12 @@ form div {
   padding-left: 1em;
   padding-right: 1em;
 }
+
+/* hero page styles */
+#shopLink {
+  /* will require media queries - likely calls for a better solution */
+  position: absolute;
+  z-index: 2;
+  top: 15%;
+  left: 70%;
+}

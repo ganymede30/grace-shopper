@@ -37,7 +37,7 @@ function createData(product, info, quantity, price) {
 
 const useStyles = makeStyles({
   root: {
-    width: '60%'
+    width: '100%'
   },
   container: {
     maxHeight: 700
@@ -67,7 +67,7 @@ const Cart = ({items, fetchCart}) => {
   }
 
   return (
-    <Paper className={classes.root} style={{width: '100%'}}>
+    <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

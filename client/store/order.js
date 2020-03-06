@@ -28,8 +28,8 @@ export const addToOrderThunk = item => async dispatch => {
   try {
     console.log('The Item: ', item)
     //console.log('The Req Id: ', req)
-    const {data} = await axios.post(`/api/users/${id}/orders`, item)
-    dispatch(addToOrder(data))
+    await axios.post(`/api/orders`, item)
+    dispatch(addToOrder(item))
   } catch (error) {
     console.error(error)
   }

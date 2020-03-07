@@ -23,6 +23,7 @@ function ccyFormat(num) {
 }
 
 function priceRow(qty, unit) {
+  console.log(qty, unit, 'QTY UNIT')
   return qty * unit
 }
 
@@ -43,7 +44,6 @@ const Cart = ({items, fetchCart}) => {
   const rows = items.map(item =>
     createRow(item.imageUrl, item.model, item.qty, item.price)
   )
-  console.log(rows, 'rows?')
 
   const invoiceSubtotal = subtotal(rows)
   const invoiceTaxes = TAX_RATE * invoiceSubtotal
@@ -89,7 +89,6 @@ const Cart = ({items, fetchCart}) => {
             </Table>
           </TableContainer>
         </Grid>
-        {/* <Paper style={{ height: 'fit-content' }}> */}
 
         <Grid item xs={4} style={{padding: '1% 2%'}}>
           <TableContainer style={{width: '70%'}} component={Paper}>
@@ -121,7 +120,6 @@ const Cart = ({items, fetchCart}) => {
             </Table>
           </TableContainer>
         </Grid>
-        {/* </Paper> */}
       </Grid>
     </Fragment>
   )

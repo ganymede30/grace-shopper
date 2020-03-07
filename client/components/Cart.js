@@ -1,6 +1,7 @@
 import React, {useEffect, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {getAllItemsThunk} from '../store/cart'
+import {allItemsInOrderThunk} from '../store/order'
 import {makeStyles} from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,6 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import {Paper, Grid} from '@material-ui/core/'
+import axios from 'axios'
 
 const TAX_RATE = 0.0
 
@@ -23,11 +25,10 @@ function ccyFormat(num) {
 }
 
 function priceRow(qty, unit) {
-  console.log(qty, unit, 'QTY UNIT')
   return qty * unit
 }
 
-function createRow(product, productInfo, qty = 0, unitPrice = 0) {
+function createRow(product, productInfo, qty, unitPrice) {
   const price = priceRow(qty, unitPrice)
   return {product, productInfo, qty, unitPrice, price}
 }
@@ -36,11 +37,15 @@ function subtotal(items) {
   return items.map(({price}) => price).reduce((sum, i) => sum + i, 0)
 }
 
-const Cart = ({items, fetchCart}) => {
+const Cart = ({items, userId, fetchCart, fetchOrder}) => {
   useEffect(() => {
-    fetchCart()
+    // fetchOrder is not persistent after refresh because the userId is undefined.
+    console.log()
+    if (userId) fetchOrder(userId)
+    // else fetchCart()
   }, [])
 
+  console.log(items, 'items')
   const rows = items.map(item =>
     createRow(item.imageUrl, item.model, item.qty, item.price)
   )
@@ -125,12 +130,18 @@ const Cart = ({items, fetchCart}) => {
   )
 }
 
-const mapState = state => ({
-  items: state.cart.items
-})
+const mapState = state => {
+  console.log(state)
+  return {
+    // items: state.cart.items,
+    items: state.order.items,
+    userId: state.user.id
+  }
+}
 
 const mapDispatch = dispatch => ({
-  fetchCart: () => dispatch(getAllItemsThunk())
+  fetchCart: () => dispatch(getAllItemsThunk()),
+  fetchOrder: userId => dispatch(allItemsInOrderThunk(userId))
 })
 
 export default connect(mapState, mapDispatch)(Cart)

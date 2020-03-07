@@ -37,6 +37,7 @@ export const addToCartThunk = item => async dispatch => {
 export const getAllItemsThunk = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/cart')
+    console.log('cart data:', data)
     dispatch(getAllItems(data))
   } catch (error) {
     console.error(error)
@@ -48,7 +49,7 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return {...state, items: [...state.items, action.item]}
     case GET_ALL_ITEMS:
-      return {...state, items: [...action.items]}
+      return {...state, items: [action.items]}
     default:
       return state
   }

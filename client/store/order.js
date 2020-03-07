@@ -19,17 +19,25 @@ export const removeFromOrder = id => ({
   id
 })
 
-export const getAllItems = ({items}) => ({
+export const getAllItems = items => ({
   type: GET_ALL_ITEMS,
   items
 })
 
 export const addToOrderThunk = item => async dispatch => {
   try {
-    console.log('The Item: ', item)
-    //console.log('The Req Id: ', req)
     await axios.post(`/api/orders`, item)
     dispatch(addToOrder(item))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const allItemsInOrderThunk = id => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/orders/${id}`)
+    console.log('data:', data)
+    if (data) dispatch(getAllItems(data.shoes))
   } catch (error) {
     console.error(error)
   }

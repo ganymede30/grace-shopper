@@ -20,9 +20,10 @@ router.post('/', async (req, res, next) => {
     })
 
     const shoe = await Shoe.findByPk(req.body.id)
-    console.log('The OrderId:', order.id)
-    console.log('The ShoeId:', shoe.id)
+    // console.log('The OrderId:', order.id)
+    // console.log('The ShoeId:', shoe.id)
     order.addShoe(shoe)
+    console.log(shoe)
 
     res.json(order)
   } catch (error) {
@@ -35,8 +36,8 @@ router.post('/', async (req, res, next) => {
 router.get('/:id/orders', async (req, res, next) => {
   try {
     const userId = req.params.id
-    const theUser = await Order.findAll({where: {userId}})
-    console.log(theUser, 'THE USER WITH ORDER')
+    const theUser = await Order.findAll({where: {userId}, include: [Shoe]})
+    // console.log(theUser, 'THE USER WITH ORDER')
     res.json(theUser)
   } catch (error) {
     next(error)
@@ -44,25 +45,30 @@ router.get('/:id/orders', async (req, res, next) => {
 })
 
 // GET one order for one user
-router.get('/:id/orders/:orderId', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    const orderId = req.params.id
-    const findOne = await Order.findByPk(orderId)
+    const userId = req.params.id
+    // find the order that matches the userId and its the cart. include shoes.
+    const findOne = await Order.findAll({
+      where: {userId: userId, isCart: true},
+      include: [Shoe]
+    })
+    // const find = await User.
     console.log('User Id:', req.user.id)
-    res.json(findOne)
+    res.json(findOne[0])
   } catch (error) {
     next(error)
   }
 })
 
 // POST one order for one user
-router.post('/:id/orders', async (req, res, next) => {
-  try {
-    const order = await Order.create(req.body)
-    const userId = req.user.id
-    order.setUser(User[userId])
-    res.json(order)
-  } catch (error) {
-    next(error)
-  }
-})
+// router.post('/:id/orders', async (req, res, next) => {
+//   try {
+//     const order = await Order.create(req.body)
+//     const userId = req.user.id
+//     order.setUser(User[userId])
+//     res.json(order)
+//   } catch (error) {
+//     next(error)
+//   }
+// })

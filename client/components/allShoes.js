@@ -12,10 +12,14 @@ class Shoes extends Component {
     this.props.gotShoes()
   }
   render() {
-    if (this.props.shoes.shoes.length) {
+    const {user, cart} = this.props.shoes
+    const {shoes} = this.props.shoes.shoes
+    // console.log('user:', user);
+    // console.log('cart:', cart);
+    if (shoes.length) {
       return (
         <div>
-          {this.props.shoes.shoes.map(shoe => {
+          {shoes.map(shoe => {
             return (
               <div key={shoe.id}>
                 <Link to={`/shoes/${shoe.id}`}>
@@ -23,9 +27,11 @@ class Shoes extends Component {
                 </Link>
                 <button
                   type="submit"
-                  //onClick={() => console.log("The Props:", this.props)}
-                  onClick={() => this.props.addToOrder(shoe)}
-                  //onClick={() => this.props.addToCart(shoe)}
+                  onClick={
+                    user.id
+                      ? () => this.props.addToOrder(shoe)
+                      : () => this.props.addToCart(shoe)
+                  }
                 >
                   Add to cart
                 </button>
@@ -42,7 +48,7 @@ class Shoes extends Component {
 
 const mapState = state => {
   return {
-    shoes: state.shoes
+    shoes: state
   }
 }
 

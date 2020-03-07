@@ -3,44 +3,73 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {ButtonGroup, Button} from '@material-ui/core'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
+  <div style={{backgroundColor: '#C1C7D8'}}>
     <nav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-          <Link to="/cart">
-            <img src="shoe.png" />
-          </Link>
+          <div id="leftNav">
+            <Link to="/">SHOELALA</Link>
+            <form>
+              <input
+                type="text"
+                name="searchQuery"
+                placeholder="Pick Your Kicks"
+              ></input>
+            </form>
+          </div>
+          <ButtonGroup
+            id="rightNav"
+            color="primary"
+            aria-label="outlined primary button group"
+          >
+            <Button id="login" variant="text">
+              <a href="#" onClick={handleClick}>
+                Logout
+              </a>
+            </Button>
+            <Button id="cart" variant="text" className="navButton">
+              <Link to="/cart" style={{margin: 0}}>
+                <img src="shoe.png" id="cartImg" />
+              </Link>
+            </Button>
+          </ButtonGroup>
         </div>
       ) : (
-        <div>
+        <div id="navbar">
           {/* The navbar will show these links before you log in */}
-          <Link to="/">
-            <h1>SHOELALA</h1>
-          </Link>
-          <form>
-            <input
-              type="text"
-              name="searchQuery"
-              placeholder="Pick Your Kicks"
-            ></input>
-          </form>
-          <div>
-            <Link to="/login">Login/Sign-Up</Link>
-            <Link to="/cart">
-              <img src="shoe.png" />
-            </Link>
+          <div id="leftNav">
+            <Link to="/">SHOELALA</Link>
+            <form>
+              <input
+                type="text"
+                name="searchQuery"
+                placeholder="Pick Your Kicks"
+              ></input>
+            </form>
           </div>
+          <ButtonGroup
+            id="rightNav"
+            color="primary"
+            aria-label="outlined primary button group"
+          >
+            <Button id="login" variant="text">
+              <Link to="/login" className="navButton">
+                <p>Join/Sign-Up</p>
+              </Link>
+            </Button>
+            <Button id="cart" variant="text" className="navButton">
+              <Link to="/cart" style={{margin: 0}}>
+                <img src="shoe.png" id="cartImg" />
+              </Link>
+            </Button>
+          </ButtonGroup>
         </div>
       )}
     </nav>
-    <hr />
   </div>
 )
 

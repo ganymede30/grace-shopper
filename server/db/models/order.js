@@ -5,6 +5,12 @@ const Order = db.define('order', {
   date: {
     type: Sequelize.DATE
   },
+  totalPrice: {
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0
+    }
+  },
   paymentStatus: {
     type: Sequelize.BOOLEAN
   },
@@ -12,7 +18,8 @@ const Order = db.define('order', {
     type: Sequelize.ENUM('Not Shipped', 'En Route', 'Arrived')
   },
   isCart: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
   },
   confirmationNumber: {
     type: Sequelize.INTEGER

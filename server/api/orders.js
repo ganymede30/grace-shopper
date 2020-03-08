@@ -27,18 +27,27 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put('/:method/:shoeId/:orderId', async (req, res, next) => {
-  const {method, shoeId, orderId} = req.params
-  const shoe = await Shoe.findByPk(shoeId)
-  const order = await Order.findByPk(orderId)
-  const orderShoes = await OrderShoes.findOne({
-    where: {shoeId: shoe.id, orderId: orderId}
-  })
-  switch (method) {
-    case 'increment':
-      res.json(await orderShoes.update({quantity: orderShoes.quantity + 1}))
-      break
-    default:
-      res.json(shoe)
+  try {
+    const {method, shoeId, orderId} = req.params
+    const shoe = await Shoe.findByPk(shoeId)
+    const order = await Order.findByPk(orderId)
+    const orderShoes = await OrderShoes.findOne({
+      where: {shoeId: shoe.id, orderId: orderId}
+    })
+    switch (method) {
+      case 'increment':
+        //  await orderShoes.update({ quantity: orderShoes.quantity + 1 })
+        res.json(await orderShoes.update({quantity: orderShoes.quantity + 1}))
+        break
+      case 'decrement':
+        // await orderShoes.update({ quantity: orderShoes.quantity - 1 })
+        res.json(await orderShoes.update({quantity: orderShoes.quantity - 1}))
+        break
+      default:
+        res.json(shoe)
+    }
+  } catch (error) {
+    console.error(error)
   }
 })
 

@@ -1,7 +1,11 @@
 import React, {useEffect, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {getAllItemsThunk} from '../store/cart'
-import {allItemsInOrderThunk} from '../store/order'
+import {
+  allItemsInOrderThunk,
+  incrementThunk,
+  decrementThunk
+} from '../store/order'
 import {makeStyles} from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -10,8 +14,10 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import {Paper, Grid} from '@material-ui/core/'
+import RemoveIcon from '@material-ui/icons/Remove'
+import AddIcon from '@material-ui/icons/Add'
 
-const TAX_RATE = 0.0
+const TAX_RATE = 0.1
 
 const useStyles = makeStyles({
   table: {
@@ -38,22 +44,30 @@ function priceRow(qty, unit) {
   return qty * unit
 }
 
-function createRow(product, productInfo, qty, unitPrice, brand) {
+function createRow(
+  orderId,
+  shoeId,
+  product,
+  productInfo,
+  qty,
+  unitPrice,
+  brand
+) {
   const price = priceRow(qty, unitPrice)
-  return {product, productInfo, qty, unitPrice, price, brand}
+  return {orderId, shoeId, product, productInfo, qty, unitPrice, price, brand}
 }
 
 function subtotal(items) {
   return items.map(({price}) => price).reduce((sum, i) => sum + i, 0)
 }
 
-const Cart = ({items, fetchCart, fetchOrder}) => {
+const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
   useEffect(() => {
     // fetchOrder is not persistent after refresh because the userId is undefined.
     ;(async () => {
       try {
         await fetchOrder()
-        console.log(fetchOrder())
+        // console.log(fetchOrder())
       } catch (error) {
         console.error(error)
       }
@@ -62,6 +76,8 @@ const Cart = ({items, fetchCart, fetchOrder}) => {
 
   const rows = items.map(item =>
     createRow(
+      item.OrderShoes.orderId,
+      item.id,
       item.imageUrl,
       item.model,
       item.OrderShoes.quantity,
@@ -103,14 +119,30 @@ const Cart = ({items, fetchCart, fetchOrder}) => {
                   <TableRow key={row.product}>
                     <TableCell>
                       <div>
+                        {/* {console.log(row, 'THIS IS THE ROW')} */}
                         <img className={classes.images} src={row.product} />
                       </div>
                     </TableCell>
                     <TableCell className={classes.fontStylesBody}>
                       {row.brand} | {row.productInfo}
                     </TableCell>
-                    <TableCell className={classes.fontStylesBody}>
+
+                    <TableCell
+                      style={{paddingTop: '6.9%'}}
+                      className={classes.fontStylesBody}
+                    >
                       {row.qty}
+                      {
+                        <div style={{margin: '15px -20px'}}>
+                          <RemoveIcon
+                            onClick={() => decrement(row.shoeId, row.orderId)}
+                          />
+
+                          <AddIcon
+                            onClick={() => increment(row.shoeId, row.orderId)}
+                          />
+                        </div>
+                      }
                     </TableCell>
                     <TableCell className={classes.fontStylesBody}>
                       {ccyFormat(row.unitPrice)}
@@ -161,7 +193,7 @@ const Cart = ({items, fetchCart, fetchOrder}) => {
 }
 
 const mapState = state => {
-  console.log('state: ', state)
+  // console.log('state: ', state)
   return {
     // items: state.cart.items,
     items: state.order.items
@@ -170,7 +202,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   fetchCart: () => dispatch(getAllItemsThunk()),
-  fetchOrder: () => dispatch(allItemsInOrderThunk())
+  fetchOrder: () => dispatch(allItemsInOrderThunk()),
+  increment: (shoeId, orderId) => dispatch(incrementThunk(shoeId, orderId)),
+  decrement: (shoeId, orderId) => dispatch(decrementThunk(shoeId, orderId))
 })
 
 export default connect(mapState, mapDispatch)(Cart)

@@ -30,6 +30,11 @@ export const increment = item => ({
   item
 })
 
+export const decrement = item => ({
+  type: DECREMENT_QTY,
+  item
+})
+
 export const addToOrderThunk = item => async dispatch => {
   try {
     await axios.post(`/api/orders`, item)
@@ -51,8 +56,20 @@ export const allItemsInOrderThunk = () => async dispatch => {
 
 export const incrementThunk = (shoeId, orderId) => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/increment/${shoeId}/${orderId}`)
+    // console.log('shoeId: ', shoeId)
+    // console.log('orderId: ', orderId)
+    const {data} = await axios.put(`/api/orders/increment/${shoeId}/${orderId}`)
+    console.log(data)
     dispatch(increment(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const decrementThunk = (shoeId, orderId) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/orders/decrement/${shoeId}/${orderId}`)
+    dispatch(decrement(data))
   } catch (error) {
     console.error(error)
   }
@@ -69,12 +86,13 @@ export default (state = initialState, action) => {
     case GET_ALL_ITEMS:
       return {...state, items: action.items}
     case INCREMENT_QTY:
-      const findItem = [...state.items].map(item => {
-        if (item.id === action.item.id) {
-          item.orderShoes.quantity++
-          return item
-        } else return item
-      })
+      // const findItem = [...state.items].map(item => {
+      //   if (item.id === action.item.id) {
+      //     item.orderShoes.quantity++
+      //     return item
+      //   } else return item
+      // })
+      console.log(action, 'action')
       return {...state, items: findItem}
     default:
       return state

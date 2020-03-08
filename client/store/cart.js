@@ -5,8 +5,7 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const GET_ALL_ITEMS = 'GET_ALL_ITEMS'
 
 const initialState = {
-  items: [],
-  total: 0
+  items: []
 }
 
 export const addToCart = item => ({
@@ -26,7 +25,6 @@ export const getAllItems = ({items}) => ({
 
 export const addToCartThunk = item => async dispatch => {
   try {
-    console.log('The Item: ', item)
     await axios.post('/api/cart', item) //post for the session;
     //await axios.post('/api/orders', item)
     dispatch(addToCart(item))
@@ -38,6 +36,7 @@ export const addToCartThunk = item => async dispatch => {
 export const getAllItemsThunk = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/cart')
+    // console.log('cart data:', data)
     dispatch(getAllItems(data))
   } catch (error) {
     console.error(error)
@@ -49,7 +48,7 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return {...state, items: [...state.items, action.item]}
     case GET_ALL_ITEMS:
-      return {...state, items: [...action.items]}
+      return {...state, items: [action.items]}
     default:
       return state
   }

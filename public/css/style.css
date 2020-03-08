@@ -30,12 +30,12 @@ nav a {
 #leftNav {
   align-items: center;
   display: flex;
-  flex-basis: 40%;
+  flex-basis: 50%;
   padding-left: 1em;
 }
 
 #logo {
-  width: 100px;
+  width: 150px;
 }
 
 #rightNav {
@@ -81,6 +81,18 @@ form div {
   flex-direction: row;
 }
 
+#footerLogo {
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: #242562;
+  display: flex;
+  justify-content: center;
+}
+
+#footerLogo img {
+  width: 125px;
+}
+
 #firstChild {
   padding-left: 1em;
   padding-right: 1em;
@@ -107,4 +119,31 @@ form div {
   z-index: 2;
   top: 15%;
   left: 70%;
+}
+
+/* shoe styles */
+
+.shoeFlex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.shoe p {
+  max-width: 80%;
+  text-align: center;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-bottom: 10px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #242562;
+}
+.shoe p:hover {
+  color: #8686ad;
+}
+
+.shoe img {
+  width: 150px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }

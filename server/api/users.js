@@ -49,7 +49,20 @@ router.get('/:id/orders/:orderId', async (req, res, next) => {
   try {
     const orderId = req.params.id
     const findOne = await Order.findByPk(orderId)
+    console.log('User:', req.user)
     res.json(findOne)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// POST one order for one user
+router.post('/:id/orders', async (req, res, next) => {
+  try {
+    const order = await Order.create(req.body)
+    const userId = req.user.id
+    order.setUser(User[userId])
+    res.json(order)
   } catch (error) {
     next(error)
   }

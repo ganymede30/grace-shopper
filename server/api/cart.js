@@ -12,8 +12,11 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   try {
-    req.session.cart.items = [...req.session.cart.items, req.body]
-    console.log(req.session, 'SESH')
+    if (
+      !JSON.stringify(req.session.cart.items).includes(JSON.stringify(req.body))
+    )
+      req.session.cart.items = [...req.session.cart.items, req.body]
+    console.log(req.session.cart, 'SESH')
     res.json(req.session.cart)
   } catch (error) {
     next(error)

@@ -41,7 +41,9 @@ router.put('/:method/:shoeId/:orderId', async (req, res, next) => {
         break
       case 'decrement':
         // await orderShoes.update({ quantity: orderShoes.quantity - 1 })
-        res.json(await orderShoes.update({quantity: orderShoes.quantity - 1}))
+        if (orderShoes.quantity > 1)
+          await orderShoes.update({quantity: orderShoes.quantity - 1})
+        else await order.removeShoe(shoe)
         break
       default:
         res.json(shoe)
@@ -62,7 +64,6 @@ router.get('/userCart', async (req, res, next) => {
       where: {userId: user.id, isCart: true},
       include: [Shoe]
     })
-    console.log(findCart)
     findCart.isCart === true ? res.json(findCart) : res.json({shoes: []})
   } catch (error) {
     console.error(error)

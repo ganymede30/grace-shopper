@@ -63,11 +63,9 @@ function subtotal(items) {
 
 const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
   useEffect(() => {
-    // fetchOrder is not persistent after refresh because the userId is undefined.
     ;(async () => {
       try {
         await fetchOrder()
-        // console.log(fetchOrder())
       } catch (error) {
         console.error(error)
       }
@@ -119,7 +117,6 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
                   <TableRow key={row.product}>
                     <TableCell>
                       <div>
-                        {/* {console.log(row, 'THIS IS THE ROW')} */}
                         <img className={classes.images} src={row.product} />
                       </div>
                     </TableCell>
@@ -156,7 +153,6 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
             </Table>
           </TableContainer>
         </Grid>
-
         <Grid item xs={4} style={{padding: '1% 2%'}}>
           <TableContainer style={{width: '70%'}} component={Paper}>
             <Table aria-label="table">
@@ -193,7 +189,6 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
 }
 
 const mapState = state => {
-  // console.log('state: ', state)
   return {
     // items: state.cart.items,
     items: state.order.items

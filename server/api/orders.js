@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
       where: {userId: req.user.id, isCart: true}
     })
     const shoe = await Shoe.findByPk(req.body.id)
-    await order.addShoe(shoe)
+    order.addShoe(shoe)
     res.json(order)
   } catch (error) {
     next(error)
@@ -62,8 +62,7 @@ router.get('/userCart', async (req, res, next) => {
       where: {userId: user.id, isCart: true},
       include: [Shoe]
     })
-    const receipt = await OrderShoes.findByPk(findCart.id)
-    console.log(receipt)
+
     findCart.isCart === true ? res.json(findCart) : res.json({shoes: []})
   } catch (error) {
     console.error(error)

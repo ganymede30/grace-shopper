@@ -16,6 +16,17 @@ const TAX_RATE = 0.0
 const useStyles = makeStyles({
   table: {
     width: '100%'
+  },
+  fontStylesHead: {
+    fontSize: '1em',
+    color: '#87898d '
+  },
+  fontStylesBody: {
+    fontSize: '1.05em'
+  },
+  images: {
+    height: '20em',
+    backgroundSize: 'auto'
   }
 })
 
@@ -27,24 +38,36 @@ function priceRow(qty, unit) {
   return qty * unit
 }
 
-function createRow(product, productInfo, qty, unitPrice) {
+function createRow(product, productInfo, qty, unitPrice, brand) {
   const price = priceRow(qty, unitPrice)
-  return {product, productInfo, qty, unitPrice, price}
+  return {product, productInfo, qty, unitPrice, price, brand}
 }
 
 function subtotal(items) {
   return items.map(({price}) => price).reduce((sum, i) => sum + i, 0)
 }
 
-const Cart = ({items, userId, fetchCart, fetchOrder}) => {
+const Cart = ({items, fetchCart, fetchOrder}) => {
   useEffect(() => {
     // fetchOrder is not persistent after refresh because the userId is undefined.
-    fetchOrder()
-    fetchCart()
+    ;(async () => {
+      try {
+        await fetchOrder()
+        console.log(fetchOrder())
+      } catch (error) {
+        console.error(error)
+      }
+    })()
   }, [])
 
   const rows = items.map(item =>
-    createRow(item.imageUrl, item.model, item.qty, item.price)
+    createRow(
+      item.imageUrl,
+      item.model,
+      item.OrderShoes.quantity,
+      item.price,
+      item.brand
+    )
   )
 
   const invoiceSubtotal = subtotal(rows)
@@ -60,11 +83,19 @@ const Cart = ({items, userId, fetchCart, fetchOrder}) => {
             <Table className={classes.table} aria-label="table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Product</TableCell>
-                  <TableCell>Product Info</TableCell>
-                  <TableCell align="right">Qty</TableCell>
-                  <TableCell align="right">Unit Price</TableCell>
-                  <TableCell align="right">Total</TableCell>
+                  <TableCell className={classes.fontStylesHead}>
+                    PRODUCT
+                  </TableCell>
+                  <TableCell className={classes.fontStylesHead}>
+                    PRODUCT INFO
+                  </TableCell>
+                  <TableCell className={classes.fontStylesHead}>QTY</TableCell>
+                  <TableCell className={classes.fontStylesHead}>
+                    UNIT PRICE
+                  </TableCell>
+                  <TableCell align="right" className={classes.fontStylesHead}>
+                    TOTAL
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -72,19 +103,21 @@ const Cart = ({items, userId, fetchCart, fetchOrder}) => {
                   <TableRow key={row.product}>
                     <TableCell>
                       <div>
-                        <img
-                          style={{
-                            height: 130,
-                            backgroundSize: 'auto'
-                          }}
-                          src={row.product}
-                        />
+                        <img className={classes.images} src={row.product} />
                       </div>
                     </TableCell>
-                    <TableCell>{row.productInfo}</TableCell>
-                    <TableCell>{row.qty}</TableCell>
-                    <TableCell>{ccyFormat(row.unitPrice)}</TableCell>
-                    <TableCell>{ccyFormat(row.price)}</TableCell>
+                    <TableCell className={classes.fontStylesBody}>
+                      {row.brand} | {row.productInfo}
+                    </TableCell>
+                    <TableCell className={classes.fontStylesBody}>
+                      {row.qty}
+                    </TableCell>
+                    <TableCell className={classes.fontStylesBody}>
+                      {ccyFormat(row.unitPrice)}
+                    </TableCell>
+                    <TableCell align="right" className={classes.fontStylesBody}>
+                      {ccyFormat(row.price)}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -128,11 +161,10 @@ const Cart = ({items, userId, fetchCart, fetchOrder}) => {
 }
 
 const mapState = state => {
-  // console.log('state: ', state)
+  console.log('state: ', state)
   return {
     // items: state.cart.items,
-    items: state.order.items,
-    userId: state.user.id
+    items: state.order.items
   }
 }
 

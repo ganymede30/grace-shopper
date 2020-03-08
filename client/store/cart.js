@@ -5,8 +5,7 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const GET_ALL_ITEMS = 'GET_ALL_ITEMS'
 
 const initialState = {
-  items: [],
-  total: 0
+  items: []
 }
 
 export const addToCart = item => ({
@@ -37,7 +36,7 @@ export const addToCartThunk = item => async dispatch => {
 export const getAllItemsThunk = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/cart')
-    console.log('cart data:', data)
+    // console.log('cart data:', data)
     dispatch(getAllItems(data))
   } catch (error) {
     console.error(error)

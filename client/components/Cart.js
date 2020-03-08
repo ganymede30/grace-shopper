@@ -10,7 +10,6 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import {Paper, Grid} from '@material-ui/core/'
-import axios from 'axios'
 
 const TAX_RATE = 0.0
 
@@ -40,12 +39,10 @@ function subtotal(items) {
 const Cart = ({items, userId, fetchCart, fetchOrder}) => {
   useEffect(() => {
     // fetchOrder is not persistent after refresh because the userId is undefined.
-    console.log()
-    if (userId) fetchOrder(userId)
-    // else fetchCart()
+    fetchOrder()
+    fetchCart()
   }, [])
 
-  console.log(items, 'items')
   const rows = items.map(item =>
     createRow(item.imageUrl, item.model, item.qty, item.price)
   )
@@ -131,7 +128,7 @@ const Cart = ({items, userId, fetchCart, fetchOrder}) => {
 }
 
 const mapState = state => {
-  console.log(state)
+  // console.log('state: ', state)
   return {
     // items: state.cart.items,
     items: state.order.items,
@@ -141,7 +138,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   fetchCart: () => dispatch(getAllItemsThunk()),
-  fetchOrder: userId => dispatch(allItemsInOrderThunk(userId))
+  fetchOrder: () => dispatch(allItemsInOrderThunk())
 })
 
 export default connect(mapState, mapDispatch)(Cart)

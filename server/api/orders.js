@@ -36,11 +36,9 @@ router.put('/:method/:shoeId/:orderId', async (req, res, next) => {
     })
     switch (method) {
       case 'increment':
-        //  await orderShoes.update({ quantity: orderShoes.quantity + 1 })
         res.json(await orderShoes.update({quantity: orderShoes.quantity + 1}))
         break
       case 'decrement':
-        // await orderShoes.update({ quantity: orderShoes.quantity - 1 })
         if (orderShoes.quantity > 1)
           await orderShoes.update({quantity: orderShoes.quantity - 1})
         else await order.removeShoe(shoe)
@@ -64,6 +62,8 @@ router.get('/userCart', async (req, res, next) => {
       where: {userId: user.id, isCart: true},
       include: [Shoe]
     })
+    const receipt = await OrderShoes.findByPk(findCart.id)
+    console.log(receipt)
     findCart.isCart === true ? res.json(findCart) : res.json({shoes: []})
   } catch (error) {
     console.error(error)

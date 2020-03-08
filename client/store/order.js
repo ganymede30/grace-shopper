@@ -47,7 +47,6 @@ export const addToOrderThunk = item => async dispatch => {
 export const allItemsInOrderThunk = () => async dispatch => {
   try {
     const {data} = await axios.get(`/api/orders/userCart`)
-    // console.log('order data:', data)
     if (data) dispatch(getAllItems(data.shoes))
   } catch (error) {
     console.error(error)
@@ -56,8 +55,6 @@ export const allItemsInOrderThunk = () => async dispatch => {
 
 export const incrementThunk = (shoeId, orderId) => async dispatch => {
   try {
-    // console.log('shoeId: ', shoeId)
-    // console.log('orderId: ', orderId)
     const {data} = await axios.put(`/api/orders/increment/${shoeId}/${orderId}`)
     console.log(data)
     dispatch(increment(data))
@@ -86,13 +83,12 @@ export default (state = initialState, action) => {
     case GET_ALL_ITEMS:
       return {...state, items: action.items}
     case INCREMENT_QTY:
-      // const findItem = [...state.items].map(item => {
-      //   if (item.id === action.item.id) {
-      //     item.orderShoes.quantity++
-      //     return item
-      //   } else return item
-      // })
-      console.log(action, 'action')
+      const findItem = [...state.items].map(item => {
+        if (item.id === action.item.id) {
+          item.orderShoes.quantity++
+          return item
+        } else return item
+      })
       return {...state, items: findItem}
     default:
       return state

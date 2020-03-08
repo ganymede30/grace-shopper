@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
       where: {userId: req.user.id, isCart: true}
     })
     const shoe = await Shoe.findByPk(req.body.id)
-    await order.addShoe(shoe)
+    order.addShoe(shoe)
     res.json(order)
   } catch (error) {
     next(error)

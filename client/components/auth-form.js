@@ -2,28 +2,38 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {makeStyles} from '@material-ui/core/styles'
+import {ButtonGroup, Button, TextField, InputAdornment} from '@material-ui/core'
 
 /**
  * COMPONENT
  */
+const useStyles = makeStyles(theme => ({
+  margin: {
+    margin: theme.spacing(1)
+  }
+}))
+
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
+  const classes = useStyles()
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
+        <TextField
+          className={classes.margin}
+          label="Email"
+          InputProps={{
+            startAdornment: <InputAdornment position="start"></InputAdornment>
+          }}
+        ></TextField>
+        <TextField
+          className={classes.margin}
+          label="Password"
+          InputProps={{
+            startAdornment: <InputAdornment position="start"></InputAdornment>
+          }}
+        ></TextField>
         <div>
           <button type="submit">{displayName}</button>
         </div>

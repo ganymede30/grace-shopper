@@ -2,10 +2,11 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
-
 import {addToOrderThunk} from '../store/order'
 import {addToCartThunk} from '../store/cart'
 import {Shoe} from './Shoe'
+import {makeStyles} from '@material-ui/core/styles'
+import {Typography, Paper, Grid, Button} from '@material-ui/core/'
 
 class Shoes extends Component {
   componentDidMount() {
@@ -19,25 +20,46 @@ class Shoes extends Component {
     if (shoes.length) {
       return (
         <div>
-          {shoes.map(shoe => {
-            return (
-              <div key={shoe.id}>
-                <Link to={`/shoes/${shoe.id}`}>
-                  <Shoe shoe={shoe} />
-                </Link>
-                <button
-                  type="submit"
-                  onClick={
-                    user.id
-                      ? () => this.props.addToOrder(shoe)
-                      : () => this.props.addToCart(shoe)
-                  }
+          <Typography
+            variant="h6"
+            style={{
+              textAlign: 'center',
+              paddingTop: '2%',
+              paddingBottom: '2%',
+              color: '#fff',
+              backgroundColor: '#242562'
+            }}
+          >
+            OUR SHOES
+          </Typography>
+          <Grid container justify="center">
+            {shoes.map(shoe => {
+              return (
+                <Paper
+                  key={shoe.id}
+                  style={{width: '33%', paddingBottom: '2.5%'}}
                 >
-                  Add to cart
-                </button>
-              </div>
-            )
-          })}
+                  <Grid className="shoeFlex">
+                    <Link to={`/shoes/${shoe.id}`} className="shoe">
+                      <Shoe shoe={shoe} />
+                    </Link>
+                    <Button
+                      style={{marginLeft: '0 auto', marginRight: '0 auto'}}
+                      variant="contained"
+                      type="submit"
+                      onClick={
+                        user.id
+                          ? () => this.props.addToOrder(shoe)
+                          : () => this.props.addToCart(shoe)
+                      }
+                    >
+                      Add to cart
+                    </Button>
+                  </Grid>
+                </Paper>
+              )
+            })}
+          </Grid>
         </div>
       )
     } else {

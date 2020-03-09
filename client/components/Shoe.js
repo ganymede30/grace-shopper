@@ -2,10 +2,12 @@ import React from 'react'
 
 export const Shoe = props => {
   return (
-    <div>
+    <div className="shoeFlex">
       <img src={props.shoe.imageUrl} />
-      <p>Name</p>
-      <p>${props.shoe.price}</p>
+      <p style={{textDecoration: 'none'}}>{props.shoe.model}</p>
+      <p style={{textDecoration: 'none'}}>
+        <b>${props.shoe.price}</b>
+      </p>
     </div>
   )
 }

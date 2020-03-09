@@ -44,9 +44,9 @@ export const getShoesThunk = () => async dispatch => {
   }
 }
 
-export const getShoesByBrandThunk = shoeBrand => async dispatch => {
+export const getShoesByBrandThunk = brand => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/shoes/brand/${shoeBrand}`)
+    const {data} = await axios.get(`/api/shoes/shoeBrand/${brand}`)
     dispatch(getShoesByBrand(data))
   } catch (error) {
     console.error(error)

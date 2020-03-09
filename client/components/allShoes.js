@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {getShoesThunk} from '../store/shoes'
+import {getShoesThunk, getShoesByBrandThunk} from '../store/shoes'
 import {addToOrderThunk} from '../store/order'
 import {addToCartThunk} from '../store/cart'
 import {Shoe} from './Shoe'
@@ -9,8 +9,8 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Typography, Paper, Grid, Button} from '@material-ui/core/'
 
 class Shoes extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       showMenu: false
     }
@@ -75,9 +75,20 @@ class Shoes extends Component {
                   this.dropdownMenu = element
                 }}
               >
-                <button> Adidas </button>
-                <button> Air Jordan </button>
-                <button> Nike </button>
+                <button onClick={() => this.props.gotShoesByBrand('Adidas')}>
+                  {' '}
+                  Adidas{' '}
+                </button>
+                <button
+                  onClick={() => this.props.gotShoesByBrand('Air Jordan')}
+                >
+                  {' '}
+                  Air Jordan{' '}
+                </button>
+                <button onClick={() => this.props.gotShoesByBrand('Nike')}>
+                  {' '}
+                  Nike{' '}
+                </button>
               </div>
             )}
           </div>
@@ -126,6 +137,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   gotShoes: () => dispatch(getShoesThunk()),
+  gotShoesByBrand: brand => dispatch(getShoesByBrandThunk(brand)),
   addToCart: item => dispatch(addToCartThunk(item)),
   addToOrder: item => dispatch(addToOrderThunk(item))
 })

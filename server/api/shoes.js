@@ -13,9 +13,20 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:shoeId', async (req, res, next) => {
   try {
+    console.log('server/api/shoes.js Req: ', req)
     const shoeId = req.params.shoeId
     const shoe = await Shoe.findByPk(shoeId)
     res.json(shoe)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:shoeBrand', async (req, res, next) => {
+  try {
+    const {shoeBrand} = req.params.brand
+    const shoes = await Shoe.findAll({where: {brand: shoeBrand}})
+    res.json(shoes)
   } catch (error) {
     next(error)
   }

@@ -9,6 +9,28 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Typography, Paper, Grid, Button} from '@material-ui/core/'
 
 class Shoes extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showMenu: false
+    }
+    this.showMenu = this.showMenu.bind(this)
+    this.closeMenu = this.closeMenu.bind(this)
+  }
+  showMenu(event) {
+    event.preventDefault()
+    this.setState({showMenu: true}, () => {
+      document.addEventListener('click', this.closeMenu)
+    })
+  }
+  closeMenu(event) {
+    if (!this.dropdownMenu.contains(event.target)) {
+      this.setState({showMenu: false}, () => {
+        document.removeEventListener('click', this.closeMenu)
+      })
+    }
+  }
+
   componentDidMount() {
     this.props.gotShoes()
   }
@@ -32,6 +54,34 @@ class Shoes extends Component {
           >
             OUR SHOES
           </Typography>
+
+          <div>
+            <button
+              onClick={this.showMenu}
+              style={{
+                alignContent: 'center',
+                paddingTop: '2%',
+                paddingBottom: '2%',
+                color: '#fff',
+                backgroundColor: '#242562'
+              }}
+            >
+              Choose a Brand:
+            </button>
+            {!this.state.showMenu ? null : (
+              <div
+                className="menu"
+                ref={element => {
+                  this.dropdownMenu = element
+                }}
+              >
+                <button> Adidas </button>
+                <button> Air Jordan </button>
+                <button> Nike </button>
+              </div>
+            )}
+          </div>
+
           <Grid container justify="center">
             {shoes.map(shoe => {
               return (

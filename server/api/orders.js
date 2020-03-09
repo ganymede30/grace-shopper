@@ -27,13 +27,13 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:method/:shoeId/:orderId/', async (req, res, next) => {
+router.put('/:method/:shoeId', async (req, res, next) => {
   try {
-    const {method, shoeId, orderId} = req.params
+    const {method, shoeId} = req.params
     const shoe = await Shoe.findByPk(shoeId)
-    const order = await Order.findByPk(orderId)
+    const order = await Order.findOne({where: {userId: req.user.id}})
     const orderShoes = await OrderShoes.findOne({
-      where: {shoeId: shoe.id, orderId: orderId}
+      where: {shoeId: shoe.id, orderId: order.id}
     })
     // console.log(Object.keys(shoe.__proto__), 'MAGIC METHODS')
 

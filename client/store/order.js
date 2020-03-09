@@ -59,27 +59,27 @@ export const allItemsInOrderThunk = () => async dispatch => {
   }
 }
 
-export const incrementThunk = (shoeId, orderId) => async dispatch => {
+export const incrementThunk = shoeId => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/orders/increment/${shoeId}/${orderId}`)
+    const {data} = await axios.put(`/api/orders/increment/${shoeId}`)
     dispatch(increment(data))
   } catch (error) {
     console.error(error)
   }
 }
 
-export const decrementThunk = (shoeId, orderId) => async dispatch => {
+export const decrementThunk = shoeId => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/orders/decrement/${shoeId}/${orderId}`)
+    const {data} = await axios.put(`/api/orders/decrement/${shoeId}`)
     dispatch(decrement(data))
   } catch (error) {
     console.error(error)
   }
 }
 
-export const removeThunk = (shoeId, orderId) => async dispatch => {
+export const removeThunk = shoeId => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/orders/remove/${shoeId}/${orderId}`)
+    const {data} = await axios.put(`/api/orders/remove/${shoeId}`)
     dispatch(remove(data))
   } catch (error) {
     console.error(error)

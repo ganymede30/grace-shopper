@@ -151,7 +151,6 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
                       {
                         <div style={{margin: '15px -20px'}}>
                           <RemoveIcon
-                            {...console.log(row, 'row')}
                             onClick={
                               row.qty > 1
                                 ? () => decrement(row.shoeId, row.orderId)

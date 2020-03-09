@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {User, Shoe, Order, OrderShoes} = require('../db/models')
+const {isAdminOrUser} = require('../adminMiddleware')
 //const Shoe = require('../db/models/shoe')
 module.exports = router
 
@@ -26,7 +27,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:method/:shoeId/:orderId', async (req, res, next) => {
+router.put('/:method/:shoeId/:orderId/', async (req, res, next) => {
   try {
     const {method, shoeId, orderId} = req.params
     const shoe = await Shoe.findByPk(shoeId)
@@ -34,6 +35,8 @@ router.put('/:method/:shoeId/:orderId', async (req, res, next) => {
     const orderShoes = await OrderShoes.findOne({
       where: {shoeId: shoe.id, orderId: orderId}
     })
+    // console.log(Object.keys(shoe.__proto__), 'MAGIC METHODS')
+
     switch (method) {
       case 'increment':
         await orderShoes.update({quantity: orderShoes.quantity + 1})

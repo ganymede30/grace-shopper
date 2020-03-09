@@ -15,8 +15,7 @@ class Shoes extends Component {
   render() {
     const {user, cart} = this.props.shoes
     const {shoes} = this.props.shoes.shoes
-    // console.log('user:', user);
-    // console.log('cart:', cart);
+
     if (shoes.length) {
       return (
         <div>

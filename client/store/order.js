@@ -5,6 +5,7 @@ const REMOVE_FROM_ORDER = 'REMOVE_FROM_ORDER'
 const GET_ALL_ITEMS = 'GET_ALL_ITEMS'
 const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
+const REMOVE_SHOE = 'REMOVE_SHOE'
 
 const initialState = {
   items: []
@@ -32,6 +33,11 @@ export const increment = item => ({
 
 export const decrement = item => ({
   type: DECREMENT_QTY,
+  item
+})
+
+export const remove = item => ({
+  type: REMOVE_SHOE,
   item
 })
 
@@ -72,6 +78,15 @@ export const decrementThunk = (shoeId, orderId) => async dispatch => {
   }
 }
 
+export const removeThunk = (shoeId, orderId) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/orders/remove/${shoeId}/${orderId}`)
+    dispatch(remove(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_ORDER:
@@ -80,16 +95,29 @@ export default (state = initialState, action) => {
       )
       if (avoidDuplicate) return {...state}
       else return {...state, items: [...state.items, action.item]}
+    case REMOVE_SHOE:
+      return {
+        ...state,
+        items: [...state.items.filter(item => item.model !== action.item.model)]
+      }
     case GET_ALL_ITEMS:
       return {...state, items: action.items}
     case INCREMENT_QTY:
-      const findItem = [...state.items].map(item => {
+      const incrementQty = [...state.items].map(item => {
         if (item.id === action.item.id) {
-          item.orderShoes.quantity++
+          item.OrderShoes.quantity += 1
           return item
         } else return item
       })
-      return {...state, items: findItem}
+      return {...state, items: incrementQty}
+    case DECREMENT_QTY:
+      const decrementQty = [...state.items].map(item => {
+        if (item.id === action.item.id) {
+          item.OrderShoes.quantity -= 1
+          return item
+        } else return item
+      })
+      return {...state, items: decrementQty}
     default:
       return state
   }

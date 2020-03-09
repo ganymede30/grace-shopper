@@ -4,7 +4,8 @@ import {getAllItemsThunk} from '../store/cart'
 import {
   allItemsInOrderThunk,
   incrementThunk,
-  decrementThunk
+  decrementThunk,
+  removeThunk
 } from '../store/order'
 import {makeStyles} from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
@@ -13,9 +14,10 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import {Paper, Grid} from '@material-ui/core/'
+import {Paper, Grid, Button} from '@material-ui/core/'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddIcon from '@material-ui/icons/Add'
+import Checkout from './Checkout'
 
 const TAX_RATE = 0.1
 
@@ -24,15 +26,19 @@ const useStyles = makeStyles({
     width: '100%'
   },
   fontStylesHead: {
-    fontSize: '1em',
+    fontSize: '0.85em',
     color: '#87898d '
   },
   fontStylesBody: {
-    fontSize: '1.05em'
+    fontSize: '0.85em'
   },
   images: {
-    height: '20em',
+    height: '13em',
     backgroundSize: 'auto'
+  },
+  button: {
+    color: '#87898d',
+    marginTop: '-10px'
   }
 })
 
@@ -61,7 +67,7 @@ function subtotal(items) {
   return items.map(({price}) => price).reduce((sum, i) => sum + i, 0)
 }
 
-const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
+const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
   useEffect(() => {
     ;(async () => {
       try {
@@ -120,19 +126,37 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
                         <img className={classes.images} src={row.product} />
                       </div>
                     </TableCell>
-                    <TableCell className={classes.fontStylesBody}>
+                    <TableCell
+                      style={{paddingTop: '8.5%'}}
+                      className={classes.fontStylesBody}
+                    >
                       {row.brand} | {row.productInfo}
+                      {
+                        <div style={{margin: '20px -3%'}}>
+                          <Button
+                            className={classes.button}
+                            onClick={() => remove(row.shoeId, row.orderId)}
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                      }
                     </TableCell>
 
                     <TableCell
-                      style={{paddingTop: '6.9%'}}
+                      style={{paddingTop: '7.9%'}}
                       className={classes.fontStylesBody}
                     >
                       {row.qty}
                       {
                         <div style={{margin: '15px -20px'}}>
                           <RemoveIcon
-                            onClick={() => decrement(row.shoeId, row.orderId)}
+                            {...console.log(row, 'row')}
+                            onClick={
+                              row.qty > 1
+                                ? () => decrement(row.shoeId, row.orderId)
+                                : () => remove(row.shoeId, row.orderId)
+                            }
                           />
 
                           <AddIcon
@@ -154,12 +178,16 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
           </TableContainer>
         </Grid>
         <Grid item xs={4} style={{padding: '1% 2%'}}>
-          <TableContainer component={Paper}>
+          <TableContainer style={{width: '70%'}} component={Paper}>
             <Table aria-label="table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Summary</TableCell>
-                  <TableCell align="right">{items.length} Items</TableCell>
+                  <TableCell className={classes.fontStylesHead}>
+                    Summary
+                  </TableCell>
+                  <TableCell className={classes.fontStylesHead} align="right">
+                    {items.length} Items
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -181,6 +209,18 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement}) => {
                 </TableRow>
               </TableBody>
             </Table>
+            <TableRow align="right">
+              <TableCell align="right">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{marginLeft: '3.3em', height: '3.5em'}}
+                  href={<Checkout />}
+                >
+                  CONTINUE TO CHECKOUT
+                </Button>
+              </TableCell>
+            </TableRow>
           </TableContainer>
         </Grid>
       </Grid>
@@ -199,7 +239,8 @@ const mapDispatch = dispatch => ({
   fetchCart: () => dispatch(getAllItemsThunk()),
   fetchOrder: () => dispatch(allItemsInOrderThunk()),
   increment: (shoeId, orderId) => dispatch(incrementThunk(shoeId, orderId)),
-  decrement: (shoeId, orderId) => dispatch(decrementThunk(shoeId, orderId))
+  decrement: (shoeId, orderId) => dispatch(decrementThunk(shoeId, orderId)),
+  remove: (shoeId, orderId) => dispatch(removeThunk(shoeId, orderId))
 })
 
 export default connect(mapState, mapDispatch)(Cart)

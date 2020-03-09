@@ -62,7 +62,6 @@ export const allItemsInOrderThunk = () => async dispatch => {
 export const incrementThunk = (shoeId, orderId) => async dispatch => {
   try {
     const {data} = await axios.put(`/api/orders/increment/${shoeId}/${orderId}`)
-    console.log(data)
     dispatch(increment(data))
   } catch (error) {
     console.error(error)

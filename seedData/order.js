@@ -1,31 +1,19 @@
 const orders = [
   {
-    date: '2020-2-13',
-    paymentStatus: false,
-    shipmentStatus: 'Not Shipped',
-    confirmationNumber: 12345,
-    trackingNumber: 678910
+    totalPrice: 10000, // $100,
+    isCart: true
   },
   {
-    date: '2020-2-14',
-    paymentStatus: false,
-    shipmentStatus: 'Not Shipped',
-    confirmationNumber: 22345,
-    trackingNumber: 778910
+    totalPrice: 5000,
+    isCart: false
   },
   {
-    date: '2020-2-16',
-    paymentStatus: false,
-    shipmentStatus: 'Not Shipped',
-    confirmationNumber: 32345,
-    trackingNumber: 878910
+    totalPrice: 4000,
+    isCart: false
   },
   {
-    date: '2020-2-18',
-    paymentStatus: false,
-    shipmentStatus: 'Not Shipped',
-    confirmationNumber: 42345,
-    trackingNumber: 978910
+    totalPrice: 3000,
+    isCart: false
   }
 ]
 

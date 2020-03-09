@@ -2,8 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk} from '../store/shoes'
-import {addToOrderThunk} from '../store/order'
-import {addToCartThunk} from '../store/cart'
+import {addToOrderThunk, addToOrderGuestThunk} from '../store/order'
 import {Shoe} from './Shoe'
 import {makeStyles} from '@material-ui/core/styles'
 import {Typography, Paper, Grid, Button} from '@material-ui/core/'
@@ -13,7 +12,7 @@ class Shoes extends Component {
     this.props.gotShoes()
   }
   render() {
-    const {user, cart} = this.props.shoes
+    const {user} = this.props.shoes
     const {shoes} = this.props.shoes.shoes
 
     if (shoes.length) {
@@ -48,8 +47,8 @@ class Shoes extends Component {
                       type="submit"
                       onClick={
                         user.id
-                          ? () => this.props.addToOrder(shoe)
-                          : () => this.props.addToCart(shoe)
+                          ? () => this.props.addToCart(shoe)
+                          : () => this.props.addToCartGuest(shoe)
                       }
                     >
                       Add to cart
@@ -75,8 +74,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   gotShoes: () => dispatch(getShoesThunk()),
-  addToCart: item => dispatch(addToCartThunk(item)),
-  addToOrder: item => dispatch(addToOrderThunk(item))
+  addToCart: item => dispatch(addToOrderThunk(item)),
+  addToCartGuest: item => dispatch(addToOrderGuestThunk(item))
 })
 
 export const allShoes = connect(mapState, mapDispatch)(Shoes)

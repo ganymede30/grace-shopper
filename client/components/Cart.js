@@ -1,8 +1,7 @@
 import React, {useEffect, Fragment} from 'react'
 import {connect} from 'react-redux'
-import {getAllItemsThunk} from '../store/cart'
 import {
-  allItemsInOrderThunk,
+  gotUsersCart,
   incrementThunk,
   decrementThunk,
   removeThunk
@@ -61,9 +60,10 @@ function subtotal(items) {
 
 const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
   useEffect(() => {
-    ;(() => {
+    ;(async () => {
       try {
-        fetchOrder()
+        await fetchOrder()
+        // fetch the order api/userCart every time.
       } catch (error) {
         console.error(error)
       }
@@ -224,8 +224,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  fetchCart: () => dispatch(getAllItemsThunk()),
-  fetchOrder: () => dispatch(allItemsInOrderThunk()),
+  fetchOrder: () => dispatch(gotUsersCart()),
   increment: shoeId => dispatch(incrementThunk(shoeId)),
   decrement: shoeId => dispatch(decrementThunk(shoeId)),
   remove: shoeId => dispatch(removeThunk(shoeId))

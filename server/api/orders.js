@@ -36,12 +36,18 @@ router.put('/:method/:shoeId/:orderId', async (req, res, next) => {
     })
     switch (method) {
       case 'increment':
-        res.json(await orderShoes.update({quantity: orderShoes.quantity + 1}))
+        await orderShoes.update({quantity: orderShoes.quantity + 1})
+        res.json(shoe)
         break
       case 'decrement':
         if (orderShoes.quantity > 1)
           await orderShoes.update({quantity: orderShoes.quantity - 1})
         else await order.removeShoe(shoe)
+        res.json(shoe)
+        break
+      case 'remove':
+        await order.removeShoe(shoe)
+        res.json(shoe)
         break
       default:
         res.json(shoe)

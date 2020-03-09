@@ -19,6 +19,10 @@ export const getMultipleShoes = shoes => ({
   type: SHOES,
   shoes
 })
+export const getShoesByBrand = shoes => ({
+  type: SHOES,
+  shoes
+})
 
 export const removeShoe = id => ({type: REMOVE_SHOE, id})
 
@@ -35,6 +39,15 @@ export const getShoesThunk = () => async dispatch => {
   try {
     const {data} = await axios.get(`/api/shoes`)
     dispatch(getMultipleShoes(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getShoesByBrandThunk = shoeBrand => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/shoes/brand/${shoeBrand}`)
+    dispatch(getShoesByBrand(data))
   } catch (error) {
     console.error(error)
   }

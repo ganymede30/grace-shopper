@@ -103,7 +103,7 @@ export default (state = initialState, action) => {
         item => item.model === action.item.model
       )
       console.log(avoidDuplicate)
-      if (avoidDuplicate) return {...state}
+      if (avoidDuplicate.length) return {...state}
       else return {...state, items: [...state.items, action.item]}
     case REMOVE_SHOE:
       return {

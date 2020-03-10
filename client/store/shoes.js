@@ -2,9 +2,10 @@ import axios from 'axios'
 
 const SHOE = 'SHOE'
 const SHOES = 'SHOES'
+const BRANDED_SHOES = 'BRANDED_SHOES'
 
 const REMOVE_SHOE = 'REMOVE_SHOE'
-// const REMOVE_SHOES = 'REMOVE_SHOES';
+//const REMOVE_SHOES = 'REMOVE_SHOES';
 
 const initialState = {
   shoe: {},
@@ -20,7 +21,7 @@ export const getMultipleShoes = shoes => ({
   shoes
 })
 export const getShoesByBrand = shoes => ({
-  type: SHOES,
+  type: BRANDED_SHOES,
   shoes
 })
 
@@ -58,6 +59,8 @@ export default (state = initialState, action) => {
     case SHOE:
       return {...state, shoe: action.shoe}
     case SHOES:
+      return {...state, shoes: action.shoes}
+    case BRANDED_SHOES:
       return {...state, shoes: action.shoes}
     default:
       return state

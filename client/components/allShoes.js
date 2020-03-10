@@ -39,6 +39,7 @@ class Shoes extends Component {
     const {shoes} = this.props.shoes.shoes
     // console.log('user:', user);
     // console.log('cart:', cart);
+    console.log(this.props.shoes)
     if (shoes.length) {
       return (
         <div>
@@ -88,20 +89,7 @@ class Shoes extends Component {
                       {brand}
                     </button>
                   ))}
-                {/* <button onClick={() => this.props.gotShoesByBrand('Adidas')}>
-                  {' '}
-                  Adidas{' '}
-                </button>
-                <button
-                  onClick={() => this.props.gotShoesByBrand('Air Jordan')}
-                >
-                  {' '}
-                  Air Jordan{' '}
-                </button>
-                <button onClick={() => this.props.gotShoesByBrand('Nike')}>
-                  {' '}
-                  Nike{' '}
-                </button> */}
+                <button onClick={() => this.props.gotShoes()}>All Shoes</button>
               </div>
             )}
           </div>

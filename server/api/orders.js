@@ -34,10 +34,14 @@ router.put('/:method/:shoeId', async (req, res, next) => {
   try {
     const {method, shoeId} = req.params
     const shoe = await Shoe.findByPk(shoeId)
-    const order = await Order.findOne({where: {userId: req.user.id}})
-    const orderShoes = await OrderShoes.findOne({
-      where: {shoeId: shoe.id, orderId: order.id}
-    })
+    let orderShoes, order
+    if (req.user.id) {
+      order = await Order.findOne({where: {userId: req.user.id}})
+      orderShoes = await OrderShoes.findOne({
+        where: {shoeId: shoe.id, orderId: order.id}
+      })
+    }
+
     switch (method) {
       case 'increment':
         await orderShoes.update({quantity: orderShoes.quantity + 1})
@@ -64,7 +68,6 @@ router.put('/:method/:shoeId', async (req, res, next) => {
 router.get('/userCart', async (req, res, next) => {
   try {
     if (!req.user) {
-      console.log(req.session.cart)
       return res.json(req.session.cart)
     }
     const user = await User.findByPk(req.user.id)

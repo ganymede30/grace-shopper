@@ -16,12 +16,17 @@ module.exports = router
 //This is for a logged in user
 router.post('/', async (req, res, next) => {
   try {
-    const [order] = await Order.findOrCreate({
-      where: {userId: req.user.id, isCart: true}
+    let [order, _] = await Order.findOrCreate({
+      where: {userId: req.user.id, isCart: true},
+      include: {
+        model: Shoe
+      }
     })
     const shoe = await Shoe.findByPk(req.body.id)
-    order.addShoe(shoe)
-    res.json(order)
+    await order.addShoe(shoe)
+    order = await Order.findOne({where: {id: order.id}, include: {model: Shoe}})
+    console.log(order.shoes)
+    res.json(order.shoes)
   } catch (error) {
     next(error)
   }

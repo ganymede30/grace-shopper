@@ -12,8 +12,7 @@ class Shoes extends Component {
     this.props.gotShoes()
   }
   render() {
-    const {user} = this.props.shoes
-    const {shoes} = this.props.shoes.shoes
+    const {user, shoes} = this.props
 
     if (shoes.length) {
       return (
@@ -68,7 +67,8 @@ class Shoes extends Component {
 
 const mapState = state => {
   return {
-    shoes: state
+    shoes: state.shoes.shoes,
+    user: state.user
   }
 }
 

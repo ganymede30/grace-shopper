@@ -60,14 +60,8 @@ function subtotal(items) {
 
 const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
   useEffect(() => {
-    ;(async () => {
-      try {
-        await fetchOrder()
-        // fetch the order api/userCart every time.
-      } catch (error) {
-        console.error(error)
-      }
-    })()
+    fetchOrder()
+    // fetch the order api/userCart every time.
   }, [])
 
   const rows = items.map(item =>
@@ -218,7 +212,6 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
 
 const mapState = state => {
   return {
-    // items: state.cart.items,
     items: state.order.items
   }
 }

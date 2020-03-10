@@ -35,8 +35,8 @@ class Shoes extends Component {
     this.props.gotShoes()
   }
   render() {
-    const {user} = this.props.shoes
-    const {shoes} = this.props.shoes.shoes
+    const {user, shoes} = this.props
+
     if (shoes.length) {
       return (
         <div>
@@ -129,7 +129,8 @@ class Shoes extends Component {
 
 const mapState = state => {
   return {
-    shoes: state
+    shoes: state.shoes.shoes,
+    user: state.user
   }
 }
 
@@ -138,7 +139,6 @@ const mapDispatch = dispatch => ({
   gotShoesByBrand: brand => dispatch(getShoesByBrandThunk(brand)),
   addToCart: item => dispatch(addToOrderThunk(item)),
   addToCartGuest: item => dispatch(addToOrderGuestThunk(item))
-  addToOrder: item => dispatch(addToOrderThunk(item))
 })
 
 export const allShoes = connect(mapState, mapDispatch)(Shoes)

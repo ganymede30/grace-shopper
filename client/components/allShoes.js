@@ -102,7 +102,7 @@ class Shoes extends Component {
                       <Shoe shoe={shoe} />
                     </Link>
                     <Button
-                      style={{marginLeft: '0 auto', marginRight: '0 auto'}}
+                      className="shoeButton"
                       variant="contained"
                       type="submit"
                       onClick={
@@ -137,7 +137,8 @@ const mapDispatch = dispatch => ({
   gotShoes: () => dispatch(getShoesThunk()),
   gotShoesByBrand: brand => dispatch(getShoesByBrandThunk(brand)),
   addToCart: item => dispatch(addToOrderThunk(item)),
-  addToCartGuest: item => dispatch(addToOrderGuestThunk(item))
+  addToCartGuest: item => dispatch(addToOrderGuestThunk(item)),
+  addToOrder: item => dispatch(addToOrderThunk(item))
 })
 
 export const allShoes = connect(mapState, mapDispatch)(Shoes)

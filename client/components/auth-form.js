@@ -16,24 +16,23 @@ const useStyles = makeStyles(theme => ({
 
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
+
   const classes = useStyles()
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
-        <TextField
-          className={classes.margin}
-          label="Email"
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>
-          }}
-        ></TextField>
-        <TextField
-          className={classes.margin}
-          label="Password"
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>
-          }}
-        ></TextField>
+        <div>
+          <label htmlFor="email">
+            <small>Email</small>
+          </label>
+          <input name="email" type="text" />
+        </div>
+        <div>
+          <label htmlFor="password">
+            <small>Password</small>
+          </label>
+          <input name="password" type="password" />
+        </div>
         <div>
           <button type="submit">{displayName}</button>
         </div>

@@ -4,12 +4,10 @@ import StripeCheckout from 'react-stripe-checkout'
 import {STRIPE_PUBLISHABLE_KEY} from '../constants/stripe'
 
 const successPayment = data => {
-  console.log(data)
   alert('Payment Successful')
 }
 
 const errorPayment = data => {
-  console.log(data)
   alert('Payment Error')
 }
 

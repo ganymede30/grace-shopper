@@ -23,11 +23,13 @@ router.post('/', async (req, res, next) => {
       const results = await OrderShoes.findAll({
         where: {shoeId: {[Op.or]: shoeIds}, orderId: order.id}
       })
+
       // Shoe Id => Quantity
       const quantityMap = {}
       results.forEach(result => {
         quantityMap[result.shoeId] = result.quantity
       })
+
       let totalPrice = 0
       order.shoes.forEach(shoe => {
         totalPrice += shoe.price * 100 * quantityMap[shoe.id]

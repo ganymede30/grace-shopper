@@ -33,18 +33,22 @@ router.post('/', async (req, res, next) => {
 router.put('/:method/:shoeId', async (req, res, next) => {
   try {
     const {method, shoeId} = req.params
-    const shoe = await Shoe.findByPk(shoeId)
-    let orderShoes, order
-    if (req.user.id) {
+    let orderShoes, order, shoe
+    if (req.user !== undefined) {
+      shoe = await Shoe.findByPk(shoeId)
       order = await Order.findOne({where: {userId: req.user.id}})
       orderShoes = await OrderShoes.findOne({
         where: {shoeId: shoe.id, orderId: order.id}
       })
+    } else {
+      shoe = req.session.cart.filter(item => item.id === +shoeId)[0]
     }
 
     switch (method) {
       case 'increment':
-        await orderShoes.update({quantity: orderShoes.quantity + 1})
+        req.user
+          ? await orderShoes.update({quantity: orderShoes.quantity + 1})
+          : (shoe.OrderShoes.quantity += 1)
         res.json(shoe)
         break
       case 'decrement':

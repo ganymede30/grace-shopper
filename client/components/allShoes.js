@@ -90,6 +90,9 @@ class Shoes extends Component {
                     </button>
                   ))}
                 <button onClick={() => this.props.gotShoes()}>All Shoes</button>
+                {/* <button onClick={() => this.props.gotShoesByBrand(brand)}>Adidas</button>
+                <button onClick={() => this.props.gotShoesByBrand(brand)}>Air Jordan</button>
+                <button onClick={() => this.props.gotShoesByBrand(brand)}>Nike</button> */}
               </div>
             )}
           </div>

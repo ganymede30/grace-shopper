@@ -52,19 +52,17 @@ class Shoes extends Component {
             OUR SHOES
           </Typography>
 
-          <div>
-            <button
-              onClick={this.showMenu}
-              style={{
-                alignContent: 'center',
-                paddingTop: '2%',
-                paddingBottom: '2%',
-                color: '#fff',
-                backgroundColor: '#242562'
-              }}
-            >
-              Choose a Brand:
-            </button>
+          <div
+            style={{
+              alignContent: 'center',
+              textAlign: 'center',
+              paddingTop: '2%',
+              paddingBottom: '2%',
+              color: '#fff',
+              backgroundColor: '#242562'
+            }}
+          >
+            <button onClick={this.showMenu}>Choose a Brand:</button>
             {!this.state.showMenu ? null : (
               <div
                 className="menu"

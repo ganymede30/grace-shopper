@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const {User, Shoe, Order, OrderShoes} = require('../db/models')
 const {isAdminOrUser, isAdmin} = require('../adminMiddleware')
-//const Shoe = require('../db/models/shoe')
 module.exports = router
 
 // router.get('/', (req, res, next) => {
@@ -13,7 +12,7 @@ module.exports = router
 //   }
 // })
 
-//This is for a logged in user
+// This is for a logged in user
 router.post('/', async (req, res, next) => {
   try {
     let [order, _] = await Order.findOrCreate({
@@ -40,8 +39,6 @@ router.put('/:method/:shoeId', async (req, res, next) => {
     const orderShoes = await OrderShoes.findOne({
       where: {shoeId: shoe.id, orderId: order.id}
     })
-    // console.log(Object.keys(shoe.__proto__), 'MAGIC METHODS')
-
     switch (method) {
       case 'increment':
         await orderShoes.update({quantity: orderShoes.quantity + 1})
@@ -91,17 +88,9 @@ router.get('/userCart', async (req, res, next) => {
 // POST to add item to guest cart
 router.post('/guest', async (req, res, next) => {
   try {
-    // const findShoe = await Shoe.findOne({
-    //   where: { userId: req.body.id }, include: [OrderShoes]
-    // })
-    // const [order] = await Order.findOrCreate({
-    //   where: { userId: req.user.id, isCart: true }
-    // })
     const order = await Order.create({where: {isCart: true}})
     const shoe = await Shoe.findByPk(req.body.id)
     order.addShoe(shoe)
-    console.log(order, 'SHOEEE')
-    console.log(shoe, 'SHOEEE')
     if (!JSON.stringify(req.session.cart).includes(JSON.stringify(req.body)))
       req.session.cart = [...req.session.cart, req.body]
     return res.json(req.session.cart)

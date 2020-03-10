@@ -9,7 +9,7 @@ import {UserDash} from './user-dash'
 const adapter = new Adapter()
 enzyme.configure({adapter})
 
-describe('UserHDash', () => {
+describe('userDash', () => {
   let userDash
 
   beforeEach(() => {

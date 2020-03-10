@@ -77,12 +77,28 @@ router.get('/userCart', async (req, res, next) => {
   }
 })
 
+// when adding an item to cart, what if we pass the eager loaded product, this way we would essentially have the same thing as a normal route, meaning the orderShoes.quantity.
+
+// we can also create a quantity defaulted to 1 in the sessions cart, and use that quantity to manage it. when the users login query everything in the sessions cart into that users id orderShoes.
+
+// maybe try to get orderId into the sessions cart, this way we can match them or match them by item comparison.
+
 // POST to add item to guest cart
-router.post('/guest', (req, res, next) => {
+router.post('/guest', async (req, res, next) => {
   try {
+    // const findShoe = await Shoe.findOne({
+    //   where: { userId: req.body.id }, include: [OrderShoes]
+    // })
+    // const [order] = await Order.findOrCreate({
+    //   where: { userId: req.user.id, isCart: true }
+    // })
+    const order = await Order.create({where: {isCart: true}})
+    const shoe = await Shoe.findByPk(req.body.id)
+    order.addShoe(shoe)
+    console.log(order, 'SHOEEE')
+    console.log(shoe, 'SHOEEE')
     if (!JSON.stringify(req.session.cart).includes(JSON.stringify(req.body)))
       req.session.cart = [...req.session.cart, req.body]
-    console.log(req.session.cart, 'SESH')
     return res.json(req.session.cart)
   } catch (error) {
     next(error)

@@ -102,7 +102,6 @@ export default (state = initialState, action) => {
       const avoidDuplicate = state.items.filter(
         item => item.model === action.item.model
       )
-      console.log(avoidDuplicate)
       if (avoidDuplicate.length) return {...state}
       else return {...state, items: [...state.items, action.item]}
     case REMOVE_SHOE:

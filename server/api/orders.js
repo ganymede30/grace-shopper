@@ -63,8 +63,7 @@ router.put('/:method/:shoeId', async (req, res, next) => {
 router.get('/userCart', async (req, res, next) => {
   try {
     if (!req.user) {
-      console.error('GUEST CART')
-      return
+      return res.json(req.session.cart)
     }
     const user = await User.findByPk(req.user.id)
     const findCart = await Order.findOne({
@@ -78,16 +77,28 @@ router.get('/userCart', async (req, res, next) => {
   }
 })
 
-// GET all orders for one user
-router.get('/:id/orders', async (req, res, next) => {
+// POST to add item to guest cart
+router.post('/guest', (req, res, next) => {
   try {
-    const userId = req.params.id
-    const theUser = await Order.findAll({where: {userId}, include: [Shoe]})
-    res.json(theUser)
+    if (!JSON.stringify(req.session.cart).includes(JSON.stringify(req.body)))
+      req.session.cart = [...req.session.cart, req.body]
+    console.log(req.session.cart, 'SESH')
+    return res.json(req.session.cart)
   } catch (error) {
     next(error)
   }
 })
+
+// GET all orders for one user
+// router.get('/:id/orders', async (req, res, next) => {
+//   try {
+//     const userId = req.params.id
+//     const theUser = await Order.findAll({ where: { userId }, include: [Shoe] })
+//     res.json(theUser)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 // GET one order for one user
 // router.get('/:id', async (req, res, next) => {

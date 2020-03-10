@@ -43,14 +43,24 @@ export const remove = item => ({
 
 export const addToOrderThunk = item => async dispatch => {
   try {
-    await axios.post(`/api/orders`, item)
+    const res = await axios.post(`/api/orders`, item)
+    // check if 200
     dispatch(addToOrder(item))
   } catch (error) {
     console.error(error)
   }
 }
 
-export const allItemsInOrderThunk = () => async dispatch => {
+export const addToOrderGuestThunk = item => async dispatch => {
+  try {
+    const res = await axios.post('/api/orders/guest', item)
+    dispatch(addToOrder(item))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const gotUsersCart = () => async dispatch => {
   try {
     const {data} = await axios.get(`/api/orders/userCart`)
     if (data) dispatch(getAllItems(data.shoes))
@@ -59,28 +69,27 @@ export const allItemsInOrderThunk = () => async dispatch => {
   }
 }
 
-export const incrementThunk = (shoeId, orderId) => async dispatch => {
+export const incrementThunk = shoeId => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/orders/increment/${shoeId}/${orderId}`)
-    console.log(data)
+    const {data} = await axios.put(`/api/orders/increment/${shoeId}`)
     dispatch(increment(data))
   } catch (error) {
     console.error(error)
   }
 }
 
-export const decrementThunk = (shoeId, orderId) => async dispatch => {
+export const decrementThunk = shoeId => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/orders/decrement/${shoeId}/${orderId}`)
+    const {data} = await axios.put(`/api/orders/decrement/${shoeId}`)
     dispatch(decrement(data))
   } catch (error) {
     console.error(error)
   }
 }
 
-export const removeThunk = (shoeId, orderId) => async dispatch => {
+export const removeThunk = shoeId => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/orders/remove/${shoeId}/${orderId}`)
+    const {data} = await axios.put(`/api/orders/remove/${shoeId}`)
     dispatch(remove(data))
   } catch (error) {
     console.error(error)
@@ -93,7 +102,7 @@ export default (state = initialState, action) => {
       const avoidDuplicate = state.items.filter(
         item => item.model === action.item.model
       )
-      if (avoidDuplicate) return {...state}
+      if (avoidDuplicate.length) return {...state}
       else return {...state, items: [...state.items, action.item]}
     case REMOVE_SHOE:
       return {

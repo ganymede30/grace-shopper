@@ -44,6 +44,7 @@ class Shoes extends Component {
                       <Shoe shoe={shoe} />
                     </Link>
                     <Button
+                      className="shoeButton"
                       variant="contained"
                       type="submit"
                       onClick={

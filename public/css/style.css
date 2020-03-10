@@ -126,7 +126,6 @@ form div {
 }
 
 /* shoe styles */
-
 .shoeFlex {
   display: flex;
   flex-direction: column;
@@ -142,10 +141,10 @@ form div {
   text-decoration: none;
 }
 
-.shoe a {
+.shoe {
   color: #242562a1;
 }
-.shoe a:hover {
+.shoe:hover {
   color: #242562;
 }
 

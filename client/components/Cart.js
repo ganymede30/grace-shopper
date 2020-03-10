@@ -58,7 +58,7 @@ function subtotal(items) {
   return items.map(({price}) => price).reduce((sum, i) => sum + i, 0)
 }
 
-const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
+const Cart = ({items, fetchOrder, increment, decrement, remove}) => {
   useEffect(() => {
     fetchOrder()
     // fetch the order api/userCart every time.
@@ -193,14 +193,7 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
             </Table>
             <TableRow align="right">
               <TableCell align="right">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{marginLeft: '3.3em', height: '3.5em'}}
-                  href={<Checkout />}
-                >
-                  CONTINUE TO CHECKOUT
-                </Button>
+                <Checkout />
               </TableCell>
             </TableRow>
           </TableContainer>

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const {Shoe} = require('../db/models')
+const {Order, Shoe} = require('../db/models')
 const {Op} = require('sequelize')
 
 const calculateOrderAmount = products => {
@@ -17,6 +17,26 @@ const calculateOrderAmount = products => {
   })
   return total
 }
+
+router.post('/', async (req, res, next) => {
+  if (!req.user) {
+    const err = new Error('You must be logged in to complete your order')
+    err.status = 404
+    return next(err)
+  } else {
+    const order = await Order.findOne({
+      where: {userId: req.user.id, isCart: true}
+    })
+    // TODO: Calculate total price
+    // TODO: Stripe server
+    order.isCart = false
+    order.shippingName = req.body.shippingName
+    order.shippingAddress = req.body.shippingAddress
+    order.totalPrice = 10000
+    await order.save()
+    return res.sendStatus(200)
+  }
+})
 
 router.post('/create-payment-intent', async (req, res, next) => {
   // Each item must have an id and quantity

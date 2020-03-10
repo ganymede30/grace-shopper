@@ -64,6 +64,7 @@ router.put('/:method/:shoeId', async (req, res, next) => {
 router.get('/userCart', async (req, res, next) => {
   try {
     if (!req.user) {
+      console.log(req.session.cart)
       return res.json(req.session.cart)
     }
     const user = await User.findByPk(req.user.id)
@@ -85,14 +86,16 @@ router.get('/userCart', async (req, res, next) => {
 // maybe try to get orderId into the sessions cart, this way we can match them or match them by item comparison.
 
 // POST to add item to guest cart
-router.post('/guest', async (req, res, next) => {
+router.post('/guest', (req, res, next) => {
   try {
-    const order = await Order.create({where: {isCart: true}})
-    const shoe = await Shoe.findByPk(req.body.id)
-    order.addShoe(shoe)
-    if (!JSON.stringify(req.session.cart).includes(JSON.stringify(req.body)))
-      req.session.cart = [...req.session.cart, req.body]
-    return res.json(req.session.cart)
+    let shoe = req.body
+    if (!shoe.OrderShoes) shoe.OrderShoes = {quantity: 1}
+    if (!JSON.stringify(req.session.cart).includes(JSON.stringify(req.body))) {
+      req.session.cart = [...req.session.cart, shoe]
+    }
+
+    // console.log('shoe: ', req.session.cart);
+    return res.json(shoe)
   } catch (error) {
     next(error)
   }

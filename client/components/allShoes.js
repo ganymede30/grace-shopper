@@ -75,7 +75,20 @@ class Shoes extends Component {
                   this.dropdownMenu = element
                 }}
               >
-                <button onClick={() => this.props.gotShoesByBrand('Adidas')}>
+                {shoes
+                  .reduce((accum, curr) => {
+                    if (!accum.includes(curr.brand)) {
+                      return [...accum, curr.brand]
+                    } else {
+                      return accum
+                    }
+                  }, [])
+                  .map(brand => (
+                    <button onClick={() => this.props.gotShoesByBrand(brand)}>
+                      {brand}
+                    </button>
+                  ))}
+                {/* <button onClick={() => this.props.gotShoesByBrand('Adidas')}>
                   {' '}
                   Adidas{' '}
                 </button>
@@ -88,7 +101,7 @@ class Shoes extends Component {
                 <button onClick={() => this.props.gotShoesByBrand('Nike')}>
                   {' '}
                   Nike{' '}
-                </button>
+                </button> */}
               </div>
             )}
           </div>

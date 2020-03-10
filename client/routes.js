@@ -5,11 +5,11 @@ import PropTypes from 'prop-types'
 import Cart from './components/Cart'
 import {
   LoginSignUp,
-  UserHome,
   Hero,
   allShoes,
   SingleShoe,
-  Checkout
+  Checkout,
+  UserDash
 } from './components'
 import {getShoesThunk} from './store/shoes'
 import {me} from './store'
@@ -45,7 +45,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/dashboard" component={UserDash} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

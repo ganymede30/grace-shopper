@@ -44,7 +44,6 @@ class Shoes extends Component {
                       <Shoe shoe={shoe} />
                     </Link>
                     <Button
-                      style={{marginLeft: '0 auto', marginRight: '0 auto'}}
                       variant="contained"
                       type="submit"
                       onClick={

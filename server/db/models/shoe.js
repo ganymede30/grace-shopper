@@ -16,27 +16,27 @@ const Shoe = db.define('shoe', {
     //   min: 0
     // },
   },
-  size: {
-    type: Sequelize.INTEGER
-    // allowNull: false,
-    // validate: {
-    //   min: 0
-    // },
-  },
-  gender: {
-    type: Sequelize.ENUM('male', 'female', 'unisex')
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true
-    // },
-  },
-  color: {
-    type: Sequelize.STRING
-    // allowNull: false,
-    // validate: {
-    //   notEmpty
-    // },
-  },
+  // size: {
+  //   type: Sequelize.INTEGER
+  // allowNull: false,
+  // validate: {
+  //   min: 0
+  // },
+  // },
+  // gender: {
+  //   type: Sequelize.ENUM('male', 'female', 'unisex')
+  // allowNull: false,
+  // validate: {
+  //   notEmpty: true
+  // },
+  //},
+  // color: {
+  //   type: Sequelize.STRING
+  // allowNull: false,
+  // validate: {
+  //   notEmpty
+  // },
+  //},
   brand: {
     type: Sequelize.STRING,
     allowNull: false,

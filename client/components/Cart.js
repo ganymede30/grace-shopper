@@ -211,14 +211,7 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
             </Table>
             <TableRow align="right">
               <TableCell align="right">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{marginLeft: '3.3em', height: '3.5em'}}
-                  href={<Checkout />}
-                >
-                  CONTINUE TO CHECKOUT
-                </Button>
+                <Checkout />
               </TableCell>
             </TableRow>
           </TableContainer>

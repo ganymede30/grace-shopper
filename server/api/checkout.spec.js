@@ -24,7 +24,7 @@ describe('Checkout routes', () => {
   })
 
   describe('/api/checkout', () => {
-    it('POST /api/checkout/create-payment-intent', async () => {
+    it.skip('POST /api/checkout/create-payment-intent', async () => {
       const res = await request(app)
         .post('/api/checkout/create-payment-intent')
         .send({
@@ -38,7 +38,7 @@ describe('Checkout routes', () => {
       expect(res.body.clientSecret).to.be.a('string')
     })
 
-    it('Requires a quantity', async () => {
+    it.skip('Requires a quantity', async () => {
       await request(app)
         .post('/api/checkout/create-payment-intent')
         .send({

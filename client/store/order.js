@@ -43,9 +43,9 @@ export const remove = item => ({
 
 export const addToOrderThunk = item => async dispatch => {
   try {
-    const res = await axios.post(`/api/orders`, item)
-    // check if 200
-    dispatch(addToOrder(item))
+    const {data} = await axios.post(`/api/orders`, item)
+    // TODO: Check if 200
+    dispatch(addToOrder(...data))
   } catch (error) {
     console.error(error)
   }
@@ -54,6 +54,7 @@ export const addToOrderThunk = item => async dispatch => {
 export const addToOrderGuestThunk = item => async dispatch => {
   try {
     const res = await axios.post('/api/orders/guest', item)
+    // TODO: Check if 200
     dispatch(addToOrder(item))
   } catch (error) {
     console.error(error)

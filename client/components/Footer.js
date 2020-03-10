@@ -4,7 +4,7 @@ import {Facebook, Twitter, Instagram, Email} from '@material-ui/icons'
 
 export default function Footer() {
   return (
-    <div>
+    <div id="footerFlex">
       <div id="footerLogo">
         <img src="shoelala.png"></img>
       </div>

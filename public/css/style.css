@@ -138,6 +138,11 @@ form div {
   left: 70%;
 }
 
+#imgContainer {
+  margin: 0;
+  padding: 0;
+}
+
 /* shoe styles */
 .shoeFlex {
   display: flex;
@@ -244,4 +249,8 @@ form div {
   padding-top: 1em;
   border-top: 1px solid #ccc;
   width: 48.93617021276595%;
+}
+/* featured shoes styles */
+#featured {
+  display: flex;
 }

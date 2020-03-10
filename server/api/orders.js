@@ -24,6 +24,7 @@ router.post('/', async (req, res, next) => {
     const shoe = await Shoe.findByPk(req.body.id)
     await order.addShoe(shoe)
     order = await Order.findOne({where: {id: order.id}, include: {model: Shoe}})
+    console.log(order.shoes)
     res.json(order.shoes)
   } catch (error) {
     next(error)

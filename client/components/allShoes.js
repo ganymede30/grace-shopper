@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk, getShoesByBrandThunk} from '../store/shoes'
 import {addToOrderThunk, addToOrderGuestThunk} from '../store/order'
-import {addToCartThunk} from '../store/cart'
 import {Shoe} from './Shoe'
 import {makeStyles} from '@material-ui/core/styles'
 import {Typography, Paper, Grid, Button} from '@material-ui/core/'
@@ -35,8 +34,8 @@ class Shoes extends Component {
     this.props.gotShoes()
   }
   render() {
-    const {user} = this.props.shoes
-    const {shoes} = this.props.shoes.shoes
+    const {user, shoes} = this.props
+
     if (shoes.length) {
       return (
         <div>
@@ -53,19 +52,17 @@ class Shoes extends Component {
             OUR SHOES
           </Typography>
 
-          <div>
-            <button
-              onClick={this.showMenu}
-              style={{
-                alignContent: 'center',
-                paddingTop: '2%',
-                paddingBottom: '2%',
-                color: '#fff',
-                backgroundColor: '#242562'
-              }}
-            >
-              Choose a Brand:
-            </button>
+          <div
+            style={{
+              alignContent: 'center',
+              textAlign: 'center',
+              paddingTop: '2%',
+              paddingBottom: '2%',
+              color: '#fff',
+              backgroundColor: '#242562'
+            }}
+          >
+            <button onClick={this.showMenu}>Choose a Brand:</button>
             {!this.state.showMenu ? null : (
               <div
                 className="menu"
@@ -87,9 +84,6 @@ class Shoes extends Component {
                     </button>
                   ))}
                 <button onClick={() => this.props.gotShoes()}>All Shoes</button>
-                {/* <button onClick={() => this.props.gotShoesByBrand(brand)}>Adidas</button>
-                <button onClick={() => this.props.gotShoesByBrand(brand)}>Air Jordan</button>
-                <button onClick={() => this.props.gotShoesByBrand(brand)}>Nike</button> */}
               </div>
             )}
           </div>
@@ -132,7 +126,8 @@ class Shoes extends Component {
 
 const mapState = state => {
   return {
-    shoes: state
+    shoes: state.shoes.shoes,
+    user: state.user
   }
 }
 
@@ -140,8 +135,7 @@ const mapDispatch = dispatch => ({
   gotShoes: () => dispatch(getShoesThunk()),
   gotShoesByBrand: brand => dispatch(getShoesByBrandThunk(brand)),
   addToCart: item => dispatch(addToOrderThunk(item)),
-  addToCartGuest: item => dispatch(addToOrderGuestThunk(item)),
-  addToOrder: item => dispatch(addToOrderThunk(item))
+  addToCartGuest: item => dispatch(addToOrderGuestThunk(item))
 })
 
 export const allShoes = connect(mapState, mapDispatch)(Shoes)

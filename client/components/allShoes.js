@@ -137,7 +137,7 @@ const mapDispatch = dispatch => ({
   gotShoes: () => dispatch(getShoesThunk()),
   gotShoesByBrand: brand => dispatch(getShoesByBrandThunk(brand)),
   addToCart: item => dispatch(addToOrderThunk(item)),
-  addToCartGuest: item => dispatch(addToOrderGuestThunk(item))
+  addToCartGuest: item => dispatch(addToOrderGuestThunk(item)),
   addToOrder: item => dispatch(addToOrderThunk(item))
 })
 

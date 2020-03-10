@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const {User, Shoe, Order, OrderShoes} = require('../db/models')
 const {isAdminOrUser, isAdmin} = require('../adminMiddleware')
-//const Shoe = require('../db/models/shoe')
 module.exports = router
 
 // router.get('/', (req, res, next) => {
@@ -13,15 +12,19 @@ module.exports = router
 //   }
 // })
 
-//This is for a logged in user
+// This is for a logged in user
 router.post('/', async (req, res, next) => {
   try {
-    const [order] = await Order.findOrCreate({
-      where: {userId: req.user.id, isCart: true}
+    let [order, _] = await Order.findOrCreate({
+      where: {userId: req.user.id, isCart: true},
+      include: {
+        model: Shoe
+      }
     })
     const shoe = await Shoe.findByPk(req.body.id)
-    order.addShoe(shoe)
-    res.json(order)
+    await order.addShoe(shoe)
+    order = await Order.findOne({where: {id: order.id}, include: {model: Shoe}})
+    res.json(order.shoes)
   } catch (error) {
     next(error)
   }
@@ -35,8 +38,6 @@ router.put('/:method/:shoeId', async (req, res, next) => {
     const orderShoes = await OrderShoes.findOne({
       where: {shoeId: shoe.id, orderId: order.id}
     })
-    // console.log(Object.keys(shoe.__proto__), 'MAGIC METHODS')
-
     switch (method) {
       case 'increment':
         await orderShoes.update({quantity: orderShoes.quantity + 1})
@@ -77,12 +78,20 @@ router.get('/userCart', async (req, res, next) => {
   }
 })
 
+// when adding an item to cart, what if we pass the eager loaded product, this way we would essentially have the same thing as a normal route, meaning the orderShoes.quantity.
+
+// we can also create a quantity defaulted to 1 in the sessions cart, and use that quantity to manage it. when the users login query everything in the sessions cart into that users id orderShoes.
+
+// maybe try to get orderId into the sessions cart, this way we can match them or match them by item comparison.
+
 // POST to add item to guest cart
-router.post('/guest', (req, res, next) => {
+router.post('/guest', async (req, res, next) => {
   try {
+    const order = await Order.create({where: {isCart: true}})
+    const shoe = await Shoe.findByPk(req.body.id)
+    order.addShoe(shoe)
     if (!JSON.stringify(req.session.cart).includes(JSON.stringify(req.body)))
       req.session.cart = [...req.session.cart, req.body]
-    console.log(req.session.cart, 'SESH')
     return res.json(req.session.cart)
   } catch (error) {
     next(error)

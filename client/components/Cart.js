@@ -1,8 +1,7 @@
 import React, {useEffect, Fragment} from 'react'
 import {connect} from 'react-redux'
-import {getAllItemsThunk} from '../store/cart'
 import {
-  allItemsInOrderThunk,
+  gotUsersCart,
   incrementThunk,
   decrementThunk,
   removeThunk
@@ -50,17 +49,9 @@ function priceRow(qty, unit) {
   return qty * unit
 }
 
-function createRow(
-  orderId,
-  shoeId,
-  product,
-  productInfo,
-  qty,
-  unitPrice,
-  brand
-) {
+function createRow(shoeId, product, productInfo, qty, unitPrice, brand) {
   const price = priceRow(qty, unitPrice)
-  return {orderId, shoeId, product, productInfo, qty, unitPrice, price, brand}
+  return {shoeId, product, productInfo, qty, unitPrice, price, brand}
 }
 
 function subtotal(items) {
@@ -72,6 +63,7 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
     ;(async () => {
       try {
         await fetchOrder()
+        // fetch the order api/userCart every time.
       } catch (error) {
         console.error(error)
       }
@@ -80,7 +72,6 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
 
   const rows = items.map(item =>
     createRow(
-      item.OrderShoes.orderId,
       item.id,
       item.imageUrl,
       item.model,
@@ -135,7 +126,7 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
                         <div style={{margin: '20px -3%'}}>
                           <Button
                             className={classes.button}
-                            onClick={() => remove(row.shoeId, row.orderId)}
+                            onClick={() => remove(row.shoeId)}
                           >
                             Remove
                           </Button>
@@ -151,17 +142,14 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
                       {
                         <div style={{margin: '15px -20px'}}>
                           <RemoveIcon
-                            {...console.log(row, 'row')}
                             onClick={
                               row.qty > 1
-                                ? () => decrement(row.shoeId, row.orderId)
-                                : () => remove(row.shoeId, row.orderId)
+                                ? () => decrement(row.shoeId)
+                                : () => remove(row.shoeId)
                             }
                           />
 
-                          <AddIcon
-                            onClick={() => increment(row.shoeId, row.orderId)}
-                          />
+                          <AddIcon onClick={() => increment(row.shoeId)} />
                         </div>
                       }
                     </TableCell>
@@ -236,11 +224,10 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  fetchCart: () => dispatch(getAllItemsThunk()),
-  fetchOrder: () => dispatch(allItemsInOrderThunk()),
-  increment: (shoeId, orderId) => dispatch(incrementThunk(shoeId, orderId)),
-  decrement: (shoeId, orderId) => dispatch(decrementThunk(shoeId, orderId)),
-  remove: (shoeId, orderId) => dispatch(removeThunk(shoeId, orderId))
+  fetchOrder: () => dispatch(gotUsersCart()),
+  increment: shoeId => dispatch(incrementThunk(shoeId)),
+  decrement: shoeId => dispatch(decrementThunk(shoeId)),
+  remove: shoeId => dispatch(removeThunk(shoeId))
 })
 
 export default connect(mapState, mapDispatch)(Cart)

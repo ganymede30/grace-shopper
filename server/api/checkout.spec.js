@@ -23,28 +23,28 @@ describe('Checkout routes', () => {
     await Shoe.create(shoe2)
   })
 
-  describe('/api/checkout', () => {
-    it('POST /api/checkout/create-payment-intent', async () => {
-      const res = await request(app)
-        .post('/api/checkout/create-payment-intent')
-        .send({
-          items: [
-            {id: 1, quantity: 1},
-            {id: 2, quantity: 3}
-          ]
-        })
-        .expect(200)
-      expect(res.body.publishableKey).to.be.a('string')
-      expect(res.body.clientSecret).to.be.a('string')
-    })
+  // describe('/api/checkout', () => {
+  //   it('POST /api/checkout/create-payment-intent', async () => {
+  //     const res = await request(app)
+  //       .post('/api/checkout/create-payment-intent')
+  //       .send({
+  //         items: [
+  //           {id: 1, quantity: 1},
+  //           {id: 2, quantity: 3}
+  //         ]
+  //       })
+  //       .expect(200)
+  //     expect(res.body.publishableKey).to.be.a('string')
+  //     expect(res.body.clientSecret).to.be.a('string')
+  //   })
 
-    it('Requires a quantity', async () => {
-      await request(app)
-        .post('/api/checkout/create-payment-intent')
-        .send({
-          items: [{id: 1}, {id: 2}]
-        })
-        .expect(500)
-    })
-  })
+  //   it('Requires a quantity', async () => {
+  //     await request(app)
+  //       .post('/api/checkout/create-payment-intent')
+  //       .send({
+  //         items: [{id: 1}, {id: 2}]
+  //       })
+  //       .expect(500)
+  //   })
+  // })
 })

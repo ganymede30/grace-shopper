@@ -64,7 +64,7 @@ const createApp = () => {
   app.use(passport.session())
 
   app.use('/', (req, res, next) => {
-    if (!req.session.cart) req.session.cart = {items: []}
+    if (!req.session.cart) req.session.cart = []
     next()
   })
 

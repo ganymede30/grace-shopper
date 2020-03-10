@@ -6,12 +6,13 @@ const {Op} = require('sequelize')
 const calculateOrderAmount = products => {
   let total = 0
   products.forEach(product => {
+    console.log(product, 'the product')
     if (!product.price) {
       throw new Error('Product is missing a price')
-    } else if (!product.quantity) {
+    } else if (!product.OrderShoes.quantity) {
       throw new Error('Product is missing a quantity')
     } else {
-      total += product.price * product.quantity
+      total += product.price * product.OrderShoes.quantity
     }
   })
   return total

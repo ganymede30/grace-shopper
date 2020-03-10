@@ -70,6 +70,8 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
     })()
   }, [])
 
+  console.log('items:', items[0])
+
   const rows = items.map(item =>
     createRow(
       item.id,

@@ -63,6 +63,7 @@ export const addToOrderGuestThunk = item => async dispatch => {
 export const gotUsersCart = () => async dispatch => {
   try {
     const {data} = await axios.get(`/api/orders/userCart`)
+    console.log('the user cart:', data)
     if (data) dispatch(getAllItems(data.shoes))
   } catch (error) {
     console.error(error)

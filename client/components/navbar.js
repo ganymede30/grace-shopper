@@ -15,12 +15,11 @@ const useStyles = makeStyles(theme => ({
 
 function Navbar({handleClick, isLoggedIn}) {
   const classes = useStyles()
-
   return (
     <div style={{backgroundColor: '#C1C7D8'}}>
       <nav>
         {isLoggedIn ? (
-          <div>
+          <div id="navbar">
             {/* The navbar will show these links after you log in */}
             <div id="leftNav">
               <Link to="/">
@@ -47,9 +46,9 @@ function Navbar({handleClick, isLoggedIn}) {
               aria-label="outlined primary button group"
             >
               <Button id="login" variant="text">
-                <a href="#" onClick={handleClick}>
-                  Logout
-                </a>
+                <Link to="/dashboard" className="navButton">
+                  <p>Hello, User</p>
+                </Link>
               </Button>
               <Button id="cart" variant="text" className="navButton">
                 <Link to="/cart" style={{margin: 0}}>

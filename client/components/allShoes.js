@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk, getShoesByBrandThunk} from '../store/shoes'
 import {addToOrderThunk, addToOrderGuestThunk} from '../store/order'
-import {addToCartThunk} from '../store/cart'
 import {Shoe} from './Shoe'
 import {makeStyles} from '@material-ui/core/styles'
 import {Typography, Paper, Grid, Button} from '@material-ui/core/'
@@ -103,7 +102,7 @@ class Shoes extends Component {
                       <Shoe shoe={shoe} />
                     </Link>
                     <Button
-                      style={{marginLeft: '0 auto', marginRight: '0 auto'}}
+                      className="shoeButton"
                       variant="contained"
                       type="submit"
                       onClick={
@@ -138,7 +137,8 @@ const mapDispatch = dispatch => ({
   gotShoes: () => dispatch(getShoesThunk()),
   gotShoesByBrand: brand => dispatch(getShoesByBrandThunk(brand)),
   addToCart: item => dispatch(addToOrderThunk(item)),
-  addToCartGuest: item => dispatch(addToOrderGuestThunk(item))
+  addToCartGuest: item => dispatch(addToOrderGuestThunk(item)),
+  addToOrder: item => dispatch(addToOrderThunk(item))
 })
 
 export const allShoes = connect(mapState, mapDispatch)(Shoes)

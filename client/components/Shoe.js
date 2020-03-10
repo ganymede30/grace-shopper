@@ -4,8 +4,8 @@ export const Shoe = props => {
   return (
     <div className="shoeFlex">
       <img src={props.shoe.imageUrl} />
-      <p style={{textDecoration: 'none'}}>{props.shoe.model}</p>
-      <p style={{textDecoration: 'none'}}>
+      <p>{props.shoe.model}</p>
+      <p>
         <b>${props.shoe.price}</b>
       </p>
     </div>

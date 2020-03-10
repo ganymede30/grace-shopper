@@ -1,7 +1,24 @@
 /* @import "node_modules/@glidejs/glide/src/assets/sass/glide.core"; */
 
+#content {
+  flex: 1 0 auto;
+  min-height: 94.125vh;
+  flex-direction: column;
+  background-color: #d5d5ea50;
+}
+
+#footerFlex {
+  flex-shrink: 0;
+}
+
+/* html, body {
+  height: 100%;
+} */
+
 body {
   margin: 0;
+  display: flex;
+  flex-direction: column;
   font-family: sans-serif;
 }
 
@@ -36,10 +53,6 @@ nav a {
 
 #logo {
   width: 150px;
-}
-
-.bg {
-  background-color: #d5d5ea50;
 }
 
 #rightNav {

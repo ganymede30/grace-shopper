@@ -6,8 +6,10 @@ const App = props => {
   console.log(props)
   return (
     <div>
-      <Navbar />
-      <Routes />
+      <div id="content">
+        <Navbar />
+        <Routes />
+      </div>
       <Footer />
     </div>
   )

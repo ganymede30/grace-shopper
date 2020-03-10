@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getShoesThunk, getShoesByBrandThunk} from '../store/shoes'
 import {addToOrderThunk, addToOrderGuestThunk} from '../store/order'
-import {addToCartThunk} from '../store/cart'
 import {Shoe} from './Shoe'
 import {makeStyles} from '@material-ui/core/styles'
 import {Typography, Paper, Grid, Button} from '@material-ui/core/'
@@ -35,8 +34,8 @@ class Shoes extends Component {
     this.props.gotShoes()
   }
   render() {
-    const {user} = this.props.shoes
-    const {shoes} = this.props.shoes.shoes
+    const {user, shoes} = this.props
+
     if (shoes.length) {
       return (
         <div>
@@ -129,7 +128,8 @@ class Shoes extends Component {
 
 const mapState = state => {
   return {
-    shoes: state
+    shoes: state.shoes.shoes,
+    user: state.user
   }
 }
 

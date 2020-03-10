@@ -17,6 +17,7 @@ import {Paper, Grid, Button} from '@material-ui/core/'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddIcon from '@material-ui/icons/Add'
 import Checkout from './Checkout'
+import {FeaturedShoes} from './featuredShoes'
 
 const TAX_RATE = 0.1
 
@@ -60,14 +61,8 @@ function subtotal(items) {
 
 const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
   useEffect(() => {
-    ;(async () => {
-      try {
-        await fetchOrder()
-        // fetch the order api/userCart every time.
-      } catch (error) {
-        console.error(error)
-      }
-    })()
+    fetchOrder()
+    // fetch the order api/userCart every time.
   }, [])
 
   const rows = items.map(item =>
@@ -212,13 +207,13 @@ const Cart = ({items, fetchCart, fetchOrder, increment, decrement, remove}) => {
           </TableContainer>
         </Grid>
       </Grid>
+      <FeaturedShoes />
     </Fragment>
   )
 }
 
 const mapState = state => {
   return {
-    // items: state.cart.items,
     items: state.order.items
   }
 }

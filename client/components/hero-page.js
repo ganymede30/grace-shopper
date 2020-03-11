@@ -12,7 +12,7 @@ export default class Hero extends Component {
           {/* <Carousel /> */}
           <img src="hero-.png" style={{width: '100%'}} />
           <Link to="/shoes" id="shopLink">
-            <Button variant="contained">SHOP</Button>
+            <Button variant="contained">LETS SHOP!</Button>
           </Link>
         </div>
         <FeaturedShoes />

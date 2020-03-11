@@ -50,6 +50,11 @@ function Navbar({handleClick, isLoggedIn}) {
                   <p>Hello, User</p>
                 </Link>
               </Button>
+              <Button id="shopping" variant="text">
+                <Link to="/shoes" className="navButton">
+                  <p>Shop</p>
+                </Link>
+              </Button>
               <Button id="login" variant="text">
                 <a href="#" onClick={handleClick}>
                   Logout

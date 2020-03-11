@@ -100,15 +100,21 @@ router.post('/guest', async (req, res, next) => {
 })
 
 // GET all orders for one user
-// router.get('/:id/orders', async (req, res, next) => {
-//   try {
-//     const userId = req.params.id
-//     const theUser = await Order.findAll({ where: { userId }, include: [Shoe] })
-//     res.json(theUser)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+router.get('/:id', async (req, res, next) => {
+  try {
+    const userId = req.params.id
+    const theUser = await Order.findAll({
+      where: {
+        userId
+        // isCart: false,
+      },
+      include: [Shoe]
+    })
+    res.json(theUser)
+  } catch (error) {
+    next(error)
+  }
+})
 
 // GET one order for one user
 // router.get('/:id', async (req, res, next) => {

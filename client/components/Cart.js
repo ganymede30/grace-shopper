@@ -82,126 +82,137 @@ const Cart = ({items, fetchOrder, increment, decrement, remove}) => {
   const classes = useStyles()
 
   return (
-    <Fragment>
-      <Grid container>
-        <Grid item xs={8} style={{padding: '1% 2%'}}>
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="table">
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.fontStylesHead}>
-                    PRODUCT
-                  </TableCell>
-                  <TableCell className={classes.fontStylesHead}>
-                    PRODUCT INFO
-                  </TableCell>
-                  <TableCell className={classes.fontStylesHead}>QTY</TableCell>
-                  <TableCell className={classes.fontStylesHead}>
-                    UNIT PRICE
-                  </TableCell>
-                  <TableCell align="right" className={classes.fontStylesHead}>
-                    TOTAL
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map(row => (
-                  <TableRow key={row.product}>
-                    <TableCell>
-                      <div>
-                        <img className={classes.images} src={row.product} />
-                      </div>
+    <div>
+      <Fragment>
+        <Grid container>
+          <Grid item xs={8} style={{padding: '1% 2%'}}>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.fontStylesHead}>
+                      PRODUCT
                     </TableCell>
-                    <TableCell
-                      style={{paddingTop: '8.5%'}}
-                      className={classes.fontStylesBody}
-                    >
-                      {row.brand} | {row.productInfo}
-                      {
-                        <div style={{margin: '20px -3%'}}>
-                          <Button
-                            className={classes.button}
-                            onClick={() => remove(row.shoeId)}
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      }
+                    <TableCell className={classes.fontStylesHead}>
+                      PRODUCT INFO
                     </TableCell>
-
-                    <TableCell
-                      style={{paddingTop: '7.9%'}}
-                      className={classes.fontStylesBody}
-                    >
-                      {row.qty}
-                      {
-                        <div style={{margin: '15px -20px'}}>
-                          <RemoveIcon
-                            onClick={
-                              row.qty > 1
-                                ? () => decrement(row.shoeId)
-                                : () => remove(row.shoeId)
-                            }
-                          />
-
-                          <AddIcon onClick={() => increment(row.shoeId)} />
-                        </div>
-                      }
+                    <TableCell className={classes.fontStylesHead}>
+                      QTY
                     </TableCell>
-                    <TableCell className={classes.fontStylesBody}>
-                      {ccyFormat(row.unitPrice)}
+                    <TableCell className={classes.fontStylesHead}>
+                      UNIT PRICE
                     </TableCell>
-                    <TableCell align="right" className={classes.fontStylesBody}>
-                      {ccyFormat(row.price)}
+                    <TableCell align="right" className={classes.fontStylesHead}>
+                      TOTAL
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {rows.map(row => (
+                    <TableRow key={row.product}>
+                      <TableCell>
+                        <div>
+                          <img className={classes.images} src={row.product} />
+                        </div>
+                      </TableCell>
+                      <TableCell
+                        style={{paddingTop: '8.5%'}}
+                        className={classes.fontStylesBody}
+                      >
+                        {row.brand} | {row.productInfo}
+                        {
+                          <div style={{margin: '20px -3%'}}>
+                            <Button
+                              className={classes.button}
+                              onClick={() => remove(row.shoeId)}
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        }
+                      </TableCell>
+
+                      <TableCell
+                        style={{paddingTop: '7.9%'}}
+                        className={classes.fontStylesBody}
+                      >
+                        {row.qty}
+                        {
+                          <div style={{margin: '15px -20px'}}>
+                            <RemoveIcon
+                              onClick={
+                                row.qty > 1
+                                  ? () => decrement(row.shoeId)
+                                  : () => remove(row.shoeId)
+                              }
+                            />
+
+                            <AddIcon onClick={() => increment(row.shoeId)} />
+                          </div>
+                        }
+                      </TableCell>
+                      <TableCell className={classes.fontStylesBody}>
+                        {ccyFormat(row.unitPrice)}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        className={classes.fontStylesBody}
+                      >
+                        {ccyFormat(row.price)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+          <Grid item xs={4} style={{padding: '1% 2%'}}>
+            <TableContainer style={{width: '70%'}} component={Paper}>
+              <Table aria-label="table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.fontStylesHead}>
+                      Summary
+                    </TableCell>
+                    <TableCell className={classes.fontStylesHead} align="right">
+                      {items.length} Items
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell style={{borderBottom: 'unset'}}>
+                      Subtotal
+                    </TableCell>
+                    <TableCell style={{borderBottom: 'unset'}} align="right">
+                      {ccyFormat(invoiceSubtotal)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Tax</TableCell>
+                    <TableCell align="right">
+                      {ccyFormat(invoiceTaxes)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Total</TableCell>
+                    <TableCell align="right">
+                      {ccyFormat(invoiceTotal)}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              <TableRow align="right">
+                <TableCell align="right">
+                  <Checkout />
+                </TableCell>
+              </TableRow>
+            </TableContainer>
+          </Grid>
         </Grid>
-        <Grid item xs={4} style={{padding: '1% 2%'}}>
-          <TableContainer style={{width: '70%'}} component={Paper}>
-            <Table aria-label="table">
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.fontStylesHead}>
-                    Summary
-                  </TableCell>
-                  <TableCell className={classes.fontStylesHead} align="right">
-                    {items.length} Items
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell style={{borderBottom: 'unset'}}>
-                    Subtotal
-                  </TableCell>
-                  <TableCell style={{borderBottom: 'unset'}} align="right">
-                    {ccyFormat(invoiceSubtotal)}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Tax</TableCell>
-                  <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Total</TableCell>
-                  <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-            <TableRow align="right">
-              <TableCell align="right">
-                <Checkout />
-              </TableCell>
-            </TableRow>
-          </TableContainer>
-        </Grid>
-      </Grid>
-      <FeaturedShoes />
-    </Fragment>
+        <FeaturedShoes />
+      </Fragment>
+    </div>
   )
 }
 

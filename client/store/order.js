@@ -6,9 +6,11 @@ const GET_ALL_ITEMS = 'GET_ALL_ITEMS'
 const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
 const REMOVE_SHOE = 'REMOVE_SHOE'
+const GET_ALL_ORDERS_FOR_USER = 'GET_ALL_ORDERS_FOR_USER'
 
 const initialState = {
-  items: []
+  items: [],
+  orders: []
 }
 
 export const addToOrder = item => ({
@@ -24,6 +26,11 @@ export const removeFromOrder = id => ({
 export const getAllItems = items => ({
   type: GET_ALL_ITEMS,
   items
+})
+
+export const getAllOrdersForUser = orders => ({
+  type: GET_ALL_ORDERS_FOR_USER,
+  orders
 })
 
 export const increment = item => ({
@@ -56,6 +63,15 @@ export const addToOrderGuestThunk = item => async dispatch => {
     const res = await axios.post('/api/orders/guest', item)
     // TODO: Check if 200
     dispatch(addToOrder(item))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getOrdersForUserThunk = userId => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/orders/${userId}`)
+    if (data) dispatch(getAllOrdersForUser(data.orders))
   } catch (error) {
     console.error(error)
   }
@@ -112,6 +128,8 @@ export default (state = initialState, action) => {
       }
     case GET_ALL_ITEMS:
       return {...state, items: action.items}
+    case GET_ALL_ORDERS_FOR_USER:
+      return {...state, orders: action.orders}
     case INCREMENT_QTY:
       const incrementQty = [...state.items].map(item => {
         if (item.id === action.item.id) {

@@ -9,7 +9,8 @@ import {
   allShoes,
   SingleShoe,
   Checkout,
-  UserDash
+  UserDash,
+  allOrdersForUser
 } from './components'
 import {getShoesThunk} from './store/shoes'
 import {me} from './store'
@@ -45,6 +46,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route path="/orders" component={allOrdersForUser} />
             <Route path="/dashboard" component={UserDash} />
           </Switch>
         )}

@@ -254,3 +254,27 @@ form div {
 #featured {
   display: flex;
 }
+
+/* all orders styles */
+.shoeInOrder p {
+  max-width: 80%;
+  text-align: center;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-bottom: 10px;
+  font-size: 8px;
+  text-decoration: none;
+}
+
+.shoeInOrder {
+  color: #242562a1;
+}
+.shoeInOrder:hover {
+  color: #242562;
+}
+
+.shoeInOrder img {
+  width: 50px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}

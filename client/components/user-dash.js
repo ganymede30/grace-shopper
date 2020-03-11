@@ -19,7 +19,7 @@ export const UserDash = props => {
       >
         DASHBOARD
       </Typography>
-      <div className="bg">
+      <div>
         <div className="dashboard">
           <div className="sidebar">
             <div style={{padding: '1em'}}>

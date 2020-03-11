@@ -6,16 +6,12 @@ import {addToOrderThunk, addToOrderGuestThunk} from '../store/order'
 import {Shoe} from './Shoe'
 import {Typography, Paper, Grid, Button} from '@material-ui/core/'
 
-
 export class Shoes extends Component {
   async componentDidMount() {
     await this.props.gotShoes()
   }
   render() {
     const {user, shoes} = this.props
-
-    console.log('featuredShoe props', this.props)
-
     function shuffle(arr) {
       let currIdx = arr.length,
         randomIdx
@@ -35,6 +31,7 @@ export class Shoes extends Component {
             variant="subtitle1"
             style={{
               textAlign: 'center',
+              marginTop: '4em',
               paddingTop: '1em',
               paddingBottom: '1.5em',
               color: '#242562'

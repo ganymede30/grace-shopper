@@ -4,7 +4,6 @@ import {Carousel} from './carousel'
 import {Button} from '@material-ui/core'
 import {FeaturedShoes} from './featuredShoes'
 
-
 export default function Hero() {
   return (
     <div>
@@ -14,7 +13,6 @@ export default function Hero() {
         <Link to="/shoes" id="shopLink">
           <Button variant="contained">SHOP!</Button>
         </Link>
-
       </div>
       <FeaturedShoes />
     </div>

@@ -71,7 +71,7 @@ export const addToOrderGuestThunk = item => async dispatch => {
 export const getOrdersForUserThunk = userId => async dispatch => {
   try {
     const {data} = await axios.get(`/api/orders/${userId}`)
-    if (data) dispatch(getAllOrdersForUser(data.orders))
+    dispatch(getAllOrdersForUser(data))
   } catch (error) {
     console.error(error)
   }

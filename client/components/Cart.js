@@ -64,8 +64,6 @@ const Cart = ({items, fetchOrder, increment, decrement, remove}) => {
     // fetch the order api/userCart every time.
   }, [])
 
-  console.log('items: ', items)
-
   const rows = items.map(item =>
     createRow(
       item.id,

@@ -3,15 +3,6 @@ const {User, Shoe, Order, OrderShoes} = require('../db/models')
 const {isAdminOrUser, isAdmin} = require('../adminMiddleware')
 module.exports = router
 
-// router.get('/', (req, res, next) => {
-//   // find all
-//   try {
-//     res.json(req.session.cart)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
 // This is for a logged in user
 router.post('/', async (req, res, next) => {
   try {
@@ -24,7 +15,6 @@ router.post('/', async (req, res, next) => {
     const shoe = await Shoe.findByPk(req.body.id)
     await order.addShoe(shoe)
     order = await Order.findOne({where: {id: order.id}, include: {model: Shoe}})
-    console.log(order.shoes)
     res.json(order.shoes)
   } catch (error) {
     next(error)
@@ -79,12 +69,6 @@ router.get('/userCart', async (req, res, next) => {
   }
 })
 
-// when adding an item to cart, what if we pass the eager loaded product, this way we would essentially have the same thing as a normal route, meaning the orderShoes.quantity.
-
-// we can also create a quantity defaulted to 1 in the sessions cart, and use that quantity to manage it. when the users login query everything in the sessions cart into that users id orderShoes.
-
-// maybe try to get orderId into the sessions cart, this way we can match them or match them by item comparison.
-
 // POST to add item to guest cart
 router.post('/guest', async (req, res, next) => {
   try {
@@ -110,38 +94,8 @@ router.get('/:id', async (req, res, next) => {
       },
       include: [Shoe]
     })
-    // console.log('theOrders', theOrders)
     res.json(theOrders)
   } catch (error) {
     next(error)
   }
 })
-
-// GET one order for one user
-// router.get('/:id', async (req, res, next) => {
-//   try {
-//     const userId = req.params.id
-//     // find the order that matches the userId and its the cart. include shoes.
-//     const findOne = await Order.findAll({
-//       where: { userId: userId, isCart: true },
-//       include: [Shoe]
-//     })
-//     // const find = await User.
-//     console.log('User Id:', req.user.id)
-//     res.json(findOne[0])
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-// POST one order for one user
-// router.post('/:id/orders', async (req, res, next) => {
-//   try {
-//     const order = await Order.create(req.body)
-//     const userId = req.user.id
-//     order.setUser(User[userId])
-//     res.json(order)
-//   } catch (error) {
-//     next(error)
-//   }
-// })

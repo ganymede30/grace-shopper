@@ -24,7 +24,6 @@ router.get('/:shoeId', async (req, res, next) => {
 
 router.get('/shoeBrand/:brand', async (req, res, next) => {
   try {
-    // console.log('server/api/shoes.js Req: ', req.params)
     const brand = req.params.brand
     const shoes = await Shoe.findAll({where: {brand}})
     res.json(shoes)

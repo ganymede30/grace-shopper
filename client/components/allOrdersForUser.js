@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getOrdersForUserThunk} from '../store/order'
 import {me} from '../store/user'
-import {Order} from './Order'
 import {Link} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core/styles'
 import {
@@ -32,147 +31,10 @@ function createData(id, totalPrice, shippingName, shippingAddress, products) {
 export class Orders extends Component {
   componentDidMount() {
     const id = this.props.user.id
-    console.log(id)
     this.props.gotOrders(id)
-    this.props.gotUser()
-    console.log(this.props)
   }
   render() {
-    const orders = [
-      {
-        id: 3,
-        totalPrice: 4000,
-        isCart: false,
-        shippingAddress: '5 Hanover Square New York, Floor 11, NY 1004',
-        shippingName: 'Michael Kenny',
-        createdAt: '2020-03-10T22:36:06.783Z',
-        updatedAt: '2020-03-10T22:36:06.823Z',
-        userId: 5,
-        shoes: [
-          {
-            id: 5,
-            model: 'yeezy 700 v3 "azael"',
-            price: 580,
-            brand: 'Adidas',
-            imageUrl:
-              'https://cdn.flightclub.com/750/TEMPLATE/161333/1.jpg?w=360',
-            stock: null,
-            createdAt: '2020-03-10T22:36:06.501Z',
-            updatedAt: '2020-03-10T22:36:06.501Z',
-            OrderShoes: {
-              quantity: 1,
-              createdAt: '2020-03-10T22:36:06.815Z',
-              updatedAt: '2020-03-10T22:36:06.815Z',
-              shoeId: 5,
-              orderId: 3
-            }
-          },
-          {
-            id: 7,
-            model: 'Air Jordan 11 retro "gamma blue"',
-            price: 420,
-            brand: 'Air Jordan',
-            imageUrl:
-              'https://cdn.flightclub.com/750/TEMPLATE/011834/1.jpg?w=360',
-            stock: null,
-            createdAt: '2020-03-10T22:36:06.501Z',
-            updatedAt: '2020-03-10T22:36:06.501Z',
-            OrderShoes: {
-              quantity: 1,
-              createdAt: '2020-03-10T22:36:06.815Z',
-              updatedAt: '2020-03-10T22:36:06.815Z',
-              shoeId: 7,
-              orderId: 3
-            }
-          },
-          {
-            id: 8,
-            model: 'yeezy boost 350 v2 "citrin reflective"',
-            price: 315,
-            brand: 'Adidas',
-            imageUrl:
-              'https://cdn.flightclub.com/750/TEMPLATE/152975/1.jpg?w=360',
-            stock: null,
-            createdAt: '2020-03-10T22:36:06.501Z',
-            updatedAt: '2020-03-10T22:36:06.501Z',
-            OrderShoes: {
-              quantity: 1,
-              createdAt: '2020-03-10T22:36:06.815Z',
-              updatedAt: '2020-03-10T22:36:06.815Z',
-              shoeId: 8,
-              orderId: 3
-            }
-          }
-        ]
-      },
-      {
-        id: 2,
-        totalPrice: 4000,
-        isCart: false,
-        shippingAddress: '5 Hanover Square New York, Floor 11, NY 1004',
-        shippingName: 'Michael Kenny',
-        createdAt: '2020-03-10T22:36:06.783Z',
-        updatedAt: '2020-03-10T22:36:06.823Z',
-        userId: 5,
-        shoes: [
-          {
-            id: 5,
-            model: 'yeezy 700 v3 "azael"',
-            price: 580,
-            brand: 'Adidas',
-            imageUrl:
-              'https://cdn.flightclub.com/750/TEMPLATE/161333/1.jpg?w=360',
-            stock: null,
-            createdAt: '2020-03-10T22:36:06.501Z',
-            updatedAt: '2020-03-10T22:36:06.501Z',
-            OrderShoes: {
-              quantity: 1,
-              createdAt: '2020-03-10T22:36:06.815Z',
-              updatedAt: '2020-03-10T22:36:06.815Z',
-              shoeId: 5,
-              orderId: 3
-            }
-          },
-          {
-            id: 7,
-            model: 'Air Jordan 11 retro "gamma blue"',
-            price: 420,
-            brand: 'Air Jordan',
-            imageUrl:
-              'https://cdn.flightclub.com/750/TEMPLATE/011834/1.jpg?w=360',
-            stock: null,
-            createdAt: '2020-03-10T22:36:06.501Z',
-            updatedAt: '2020-03-10T22:36:06.501Z',
-            OrderShoes: {
-              quantity: 1,
-              createdAt: '2020-03-10T22:36:06.815Z',
-              updatedAt: '2020-03-10T22:36:06.815Z',
-              shoeId: 7,
-              orderId: 3
-            }
-          },
-          {
-            id: 8,
-            model: 'yeezy boost 350 v2 "citrin reflective"',
-            price: 315,
-            brand: 'Adidas',
-            imageUrl:
-              'https://cdn.flightclub.com/750/TEMPLATE/152975/1.jpg?w=360',
-            stock: null,
-            createdAt: '2020-03-10T22:36:06.501Z',
-            updatedAt: '2020-03-10T22:36:06.501Z',
-            OrderShoes: {
-              quantity: 1,
-              createdAt: '2020-03-10T22:36:06.815Z',
-              updatedAt: '2020-03-10T22:36:06.815Z',
-              shoeId: 8,
-              orderId: 3
-            }
-          }
-        ]
-      }
-    ]
-
+    const orders = this.props.orders
     if (orders.length) {
       const rows = []
       orders.map(order => {
@@ -189,7 +51,6 @@ export class Orders extends Component {
           )
         )
       })
-      console.log(rows)
       return (
         <div>
           <Typography
@@ -240,7 +101,7 @@ export class Orders extends Component {
 
 const mapState = state => {
   return {
-    orders: state.orders,
+    orders: state.order.orders,
     user: state.user
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-lonely-if */
+/* eslint-disable complexity */
 const router = require('express').Router()
 const {User, Shoe, Order, OrderShoes} = require('../db/models')
 const {isAdminOrUser, isAdmin} = require('../adminMiddleware')
@@ -44,26 +46,28 @@ router.put('/:method/:shoeId', async (req, res, next) => {
       shoe = req.session.cart.filter(item => item.id === +shoeId)[0]
     }
 
-    switch (method) {
-      case 'increment':
-        req.user
-          ? await orderShoes.update({quantity: orderShoes.quantity + 1})
-          : (shoe.OrderShoes.quantity += 1)
-        res.json(shoe)
-        break
-      case 'decrement':
-        if (orderShoes.quantity > 1)
+    if (method === 'increment') {
+      req.user
+        ? await orderShoes.update({quantity: orderShoes.quantity + 1})
+        : (shoe.OrderShoes.quantity += 1)
+    } else if (method === 'decrement') {
+      if (req.user !== undefined) {
+        if (orderShoes.quantity > 1) {
           await orderShoes.update({quantity: orderShoes.quantity - 1})
-        else await order.removeShoe(shoe)
-        res.json(shoe)
-        break
-      case 'remove':
+        } else {
+          await order.removeShoe(shoe)
+        }
+      } else {
+        shoe.OrderShoes.quantity -= 1
+      }
+    } else if (method === 'remove') {
+      if (req.user !== undefined) {
         await order.removeShoe(shoe)
-        res.json(shoe)
-        break
-      default:
-        res.json(shoe)
+      } else {
+        req.session.cart = req.session.cart.filter(item => item.id !== shoe.id)
+      }
     }
+    return res.json(shoe)
   } catch (error) {
     console.error(error)
   }
@@ -74,6 +78,8 @@ router.get('/userCart', async (req, res, next) => {
     if (!req.user) {
       return res.json(req.session.cart)
     }
+    console.log(req.session.cart, ': session cart')
+
     const user = await User.findByPk(req.user.id)
     const findCart = await Order.findOne({
       where: {userId: user.id, isCart: true},
@@ -100,8 +106,6 @@ router.post('/guest', (req, res, next) => {
     if (!JSON.stringify(req.session.cart).includes(JSON.stringify(req.body))) {
       req.session.cart = [...req.session.cart, shoe]
     }
-
-    // console.log('shoe: ', req.session.cart);
     return res.json(shoe)
   } catch (error) {
     next(error)

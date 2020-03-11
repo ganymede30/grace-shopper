@@ -6,6 +6,7 @@ import {addToOrderThunk, addToOrderGuestThunk} from '../store/order'
 import {Shoe} from './Shoe'
 import {Typography, Paper, Grid, Button} from '@material-ui/core/'
 
+
 export class Shoes extends Component {
   async componentDidMount() {
     await this.props.gotShoes()

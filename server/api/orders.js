@@ -116,32 +116,3 @@ router.get('/:id', async (req, res, next) => {
     next(error)
   }
 })
-
-// GET one order for one user
-// router.get('/:id', async (req, res, next) => {
-//   try {
-//     const userId = req.params.id
-//     // find the order that matches the userId and its the cart. include shoes.
-//     const findOne = await Order.findAll({
-//       where: { userId: userId, isCart: true },
-//       include: [Shoe]
-//     })
-//     // const find = await User.
-//     console.log('User Id:', req.user.id)
-//     res.json(findOne[0])
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-// POST one order for one user
-// router.post('/:id/orders', async (req, res, next) => {
-//   try {
-//     const order = await Order.create(req.body)
-//     const userId = req.user.id
-//     order.setUser(User[userId])
-//     res.json(order)
-//   } catch (error) {
-//     next(error)
-//   }
-// })

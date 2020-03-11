@@ -45,10 +45,15 @@ function Navbar({handleClick, isLoggedIn}) {
               color="primary"
               aria-label="outlined primary button group"
             >
-              <Button id="login" variant="text">
+              <Button id="dashboard" variant="text">
                 <Link to="/dashboard" className="navButton">
                   <p>Hello, User</p>
                 </Link>
+              </Button>
+              <Button id="login" variant="text">
+                <a href="#" onClick={handleClick}>
+                  Logout
+                </a>
               </Button>
               <Button id="cart" variant="text" className="navButton">
                 <Link to="/cart" style={{margin: 0}}>

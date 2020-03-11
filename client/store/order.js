@@ -53,9 +53,9 @@ export const addToOrderThunk = item => async dispatch => {
 
 export const addToOrderGuestThunk = item => async dispatch => {
   try {
-    const res = await axios.post('/api/orders/guest', item)
+    const {data} = await axios.post('/api/orders/guest', item)
     // TODO: Check if 200
-    dispatch(addToOrder(item))
+    dispatch(addToOrder(data))
   } catch (error) {
     console.error(error)
   }
@@ -64,7 +64,8 @@ export const addToOrderGuestThunk = item => async dispatch => {
 export const gotUsersCart = () => async dispatch => {
   try {
     const {data} = await axios.get(`/api/orders/userCart`)
-    if (data) dispatch(getAllItems(data.shoes))
+    if (data.shoes) dispatch(getAllItems(data.shoes))
+    else dispatch(getAllItems(data))
   } catch (error) {
     console.error(error)
   }

@@ -17,6 +17,7 @@ import {Paper, Grid, Button} from '@material-ui/core/'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddIcon from '@material-ui/icons/Add'
 import Checkout from './Checkout'
+import {FeaturedShoes} from './featuredShoes'
 
 const TAX_RATE = 0.1
 
@@ -199,6 +200,7 @@ const Cart = ({items, fetchOrder, increment, decrement, remove}) => {
           </TableContainer>
         </Grid>
       </Grid>
+      <FeaturedShoes />
     </Fragment>
   )
 }
